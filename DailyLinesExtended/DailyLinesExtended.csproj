@@ -8,7 +8,13 @@
 		<LangVersion>latest</LangVersion>
 		<UseWPF>true</UseWPF>
 		<OutputType>Library</OutputType>
+		<AtasIndicatorsDir>$(USERPROFILE)\Documents\ATAS\Indicators</AtasIndicatorsDir>
 	</PropertyGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Message Importance="high" Text="Copying $(TargetPath) to $(AtasIndicatorsDir)" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AtasIndicatorsDir)" />
+	</Target>
 
 	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk.WindowsDesktop" />
 	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk.WindowsDesktop" />

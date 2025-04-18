@@ -498,7 +498,8 @@ public class DailyLinesExtended : Indicator
             _per = value;
             
             bool isPreviousPeriod = value is PeriodType.PreviousDay or PeriodType.PreviousWeek or PeriodType.PreviousMonth;
-            UseOpenAlert.Enabled = UseCloseAlert.Enabled = UseHighAlert.Enabled = UseLowAlert.Enabled = isPreviousPeriod;
+            UseOpenAlert.Enabled = UseCloseAlert.Enabled = UseHighAlert.Enabled = UseLowAlert.Enabled =
+	            UsePocAlert.Enabled = UseVahAlert.Enabled = UseValAlert.Enabled = isPreviousPeriod;
             
             RecalculateValues();
         }
@@ -660,7 +661,8 @@ public class DailyLinesExtended : Indicator
         ((ValueDataSeries)DataSeries[0]).VisualType = VisualMode.Hide;
         
         bool isPreviousPeriod = _per is PeriodType.PreviousDay or PeriodType.PreviousWeek or PeriodType.PreviousMonth;
-        UseOpenAlert.Enabled = UseCloseAlert.Enabled = UseHighAlert.Enabled = UseLowAlert.Enabled = isPreviousPeriod;
+        UseOpenAlert.Enabled = UseCloseAlert.Enabled = UseHighAlert.Enabled = UseLowAlert.Enabled =
+	        UsePocAlert.Enabled = UseVahAlert.Enabled = UseValAlert.Enabled = isPreviousPeriod;
     }
 
     #endregion
