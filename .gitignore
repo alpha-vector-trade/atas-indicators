@@ -47,8 +47,6 @@ bld/
 *_wpftmp.csproj
 *.log
 *.tlog
-*.vspscc
-*.vssscc
 .builds
 *.pidb
 *.svclog
@@ -76,10 +74,6 @@ bld/
 
 # User-specific files
 *.rsuser
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
 
 # Backup & report files from converting an old project file
 # to a newer Visual Studio version
@@ -138,5 +132,4 @@ _Pvt_Extensions
 .vshistory/
 
 # Temporary files
-*.tmp
 *.temp
