@@ -16,8 +16,8 @@
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AtasIndicatorsDir)" />
 	</Target>
 
-	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk.WindowsDesktop" />
-	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk.WindowsDesktop" />
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 
 	<ItemGroup>
 		<PackageReference Include="morelinq" Version="4.3.0" />

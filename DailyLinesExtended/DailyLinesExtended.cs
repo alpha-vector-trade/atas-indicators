@@ -68,11 +68,6 @@ public class DailyLinesExtended : Indicator
 
 	    [Display(ResourceType = typeof(Resources), Name = "Ticks")]
 	    Tick,
-
-	    [Browsable(false)]
-	    [Obsolete]
-	    [Display(ResourceType = typeof(Resources), Name = "Time")]
-	    Time
     }
 
     #region Candle
@@ -204,11 +199,6 @@ public class DailyLinesExtended : Indicator
 						priceInfo.Value += info.Ticks;
 						break;
 					}
-					case MiddleClusterType.Time:
-					{
-						priceInfo.Value += info.Time;
-						break;
-					}
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
@@ -282,11 +272,6 @@ public class DailyLinesExtended : Indicator
 					break;
 				}
 				case MiddleClusterType.Tick:
-				{
-					priceInfo.Value++;
-					break;
-				}
-				case MiddleClusterType.Time:
 				{
 					priceInfo.Value++;
 					break;
