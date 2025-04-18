@@ -643,6 +643,9 @@ public class DailyLinesExtended : Indicator
     [Range(1, 100)]
     public int ApproximationTicks { get; set; } = 3;
 
+    [Display(ResourceType = typeof(Resources), Name = "OmitConsecutiveAlerts", GroupName = "Alerts", Order = 386)]
+    public bool OmitConsecutiveAlerts { get; set; } = false;
+
     // Alerts
     [Display(ResourceType = typeof(Resources), Name = "AlertFile", GroupName = "Alerts", Order = 400)]
     public string AlertFile { get; set; } = "alert1";
@@ -1032,6 +1035,7 @@ public class DailyLinesExtended : Indicator
 	    {
 		    triggered = true;
 	    }
+
 	    // Approximation check if enabled
 	    else if (UseApproximationAlert)
 	    {
@@ -1050,7 +1054,11 @@ public class DailyLinesExtended : Indicator
 
 	    if (triggered)
 	    {
-		    AddAlert(AlertFile, InstrumentInfo.Instrument, message, AlertBGColor, AlertForeColor);
+		    if (!OmitConsecutiveAlerts || (OmitConsecutiveAlerts && lastAlertBar < bar - 1))
+		    {
+			    AddAlert(AlertFile, InstrumentInfo.Instrument, message, AlertBGColor, AlertForeColor);
+		    }
+
 		    lastAlertBar = bar;
 	    }
     }

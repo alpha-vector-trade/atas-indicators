@@ -2348,4 +2348,7 @@
   <data name="Val" xml:space="preserve">
     <value>VAL</value>
   </data>
+  <data name="OmitConsecutiveAlerts" xml:space="preserve">
+    <value>Omit on consecutive candles</value>
+  </data>
 </root>
