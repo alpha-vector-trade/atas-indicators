@@ -49,7 +49,7 @@ public class DailyLinesExtended : Indicator
         [Display(ResourceType = typeof(Resources), Name = "PreviousMonth")]
         PreviousMonth,
     }
-    
+
     [Obfuscation(Feature = "renaming", ApplyToMembers = true, Exclude = true)]
     [Serializable]
     public enum MiddleClusterType
@@ -74,7 +74,7 @@ public class DailyLinesExtended : Indicator
 	    [Display(ResourceType = typeof(Resources), Name = "Time")]
 	    Time
     }
-    
+
     #region Candle
 
 	public class DynamicCandle
@@ -450,7 +450,7 @@ public class DailyLinesExtended : Indicator
     private bool _showText = true;
     private TimeSpan _startTime;
     private int _targetBar;
-    
+
     private readonly DynamicCandle _currentPeriodCandle = new();
     private readonly DynamicCandle _previousPeriodCandle = new();
 
@@ -467,7 +467,7 @@ public class DailyLinesExtended : Indicator
     private int _lastPocAlertBar = -1;
     private int _lastVahAlertBar = -1;
     private int _lastValAlertBar = -1;
-    
+
     private int _lastOpenAlertBar = -1;
     private int _lastCloseAlertBar = -1;
     private int _lastHighAlertBar = -1;
@@ -496,11 +496,11 @@ public class DailyLinesExtended : Indicator
         set
         {
             _per = value;
-            
+
             bool isPreviousPeriod = value is PeriodType.PreviousDay or PeriodType.PreviousWeek or PeriodType.PreviousMonth;
             UseOpenAlert.Enabled = UseCloseAlert.Enabled = UseHighAlert.Enabled = UseLowAlert.Enabled =
 	            UsePocAlert.Enabled = UseVahAlert.Enabled = UseValAlert.Enabled = isPreviousPeriod;
-            
+
             RecalculateValues();
         }
     }
@@ -602,11 +602,11 @@ public class DailyLinesExtended : Indicator
 
     [Display(ResourceType = typeof(Resources), Name = "CrossAlert", GroupName = "Low", Order = 346)]
     public FilterBool UseLowAlert { get; set; } = new(false);
-    
+
     // POC
     [Display(ResourceType = typeof(Resources), Name = "Line", GroupName = "Poc", Order = 350)]
     public PenSettings PocPen { get; set; } = new() { Color = DefaultColors.Red.Convert(), Width = 2 };
-    
+
     [Display(ResourceType = typeof(Resources), GroupName = "Poc", Name = "Type", Order = 356)]
     public MiddleClusterType Type { get; set; } = MiddleClusterType.Volume;
 
@@ -615,7 +615,7 @@ public class DailyLinesExtended : Indicator
 
     [Display(ResourceType = typeof(Resources), Name = "CrossAlert", GroupName = "Poc", Order = 357)]
     public FilterBool UsePocAlert { get; set; } = new(false);
-    
+
     // VAH
     [Display(ResourceType = typeof(Resources), Name = "Line", GroupName = "Vah", Order = 360)]
     public PenSettings VahPen { get; set; } = new() { Color = DefaultColors.Red.Convert(), Width = 2 };
@@ -625,7 +625,7 @@ public class DailyLinesExtended : Indicator
 
     [Display(ResourceType = typeof(Resources), Name = "CrossAlert", GroupName = "Vah", Order = 366)]
     public FilterBool UseVahAlert { get; set; } = new(false);
-    
+
     // VAL
     [Display(ResourceType = typeof(Resources), Name = "Line", GroupName = "Val", Order = 370)]
     public PenSettings ValPen { get; set; } = new() { Color = DefaultColors.Red.Convert(), Width = 2 };
@@ -635,7 +635,7 @@ public class DailyLinesExtended : Indicator
 
     [Display(ResourceType = typeof(Resources), Name = "CrossAlert", GroupName = "Val", Order = 376)]
     public FilterBool UseValAlert { get; set; } = new(false);
-    
+
     [Display(ResourceType = typeof(Resources), Name = "ApproximationAlert", GroupName = "Alerts", Order = 380)]
     public bool UseApproximationAlert { get; set; } = false;
 
@@ -666,7 +666,7 @@ public class DailyLinesExtended : Indicator
 
         DataSeries[0].IsHidden = true;
         ((ValueDataSeries)DataSeries[0]).VisualType = VisualMode.Hide;
-        
+
         bool isPreviousPeriod = _per is PeriodType.PreviousDay or PeriodType.PreviousWeek or PeriodType.PreviousMonth;
         UseOpenAlert.Enabled = UseCloseAlert.Enabled = UseHighAlert.Enabled = UseLowAlert.Enabled =
 	        UsePocAlert.Enabled = UseVahAlert.Enabled = UseValAlert.Enabled = isPreviousPeriod;
@@ -711,19 +711,19 @@ public class DailyLinesExtended : Indicator
 
 	    // Draw all lines
 	    DrawLevelLine(context, open, openBar, OpenPen, string.IsNullOrEmpty(OpenText) ? periodStr + "Open" : OpenText);
-	    
+
 	    if (!isCurrentPeriod)
 	        DrawLevelLine(context, close, closeBar, ClosePen, string.IsNullOrEmpty(CloseText) ? periodStr + "Close" : CloseText);
-	    
+
 	    DrawLevelLine(context, high, highBar, HighPen, string.IsNullOrEmpty(HighText) ? periodStr + "High" : HighText);
 	    DrawLevelLine(context, low, lowBar, LowPen, string.IsNullOrEmpty(LowText) ? periodStr + "Low" : LowText);
-	    
+
 	    if (poc > 0)
 	        DrawLevelLine(context, poc, pocStartBar, PocPen, string.IsNullOrEmpty(PocText) ? periodStr + "POC" : PocText);
-	    
+
 	    if (vah > 0)
 	        DrawLevelLine(context, vah, pocStartBar, VahPen, string.IsNullOrEmpty(VahText) ? periodStr + "VAH" : VahText);
-	    
+
 	    if (val > 0)
 	        DrawLevelLine(context, val, pocStartBar, ValPen, string.IsNullOrEmpty(ValText) ? periodStr + "VAL" : ValText);
 
@@ -773,9 +773,9 @@ public class DailyLinesExtended : Indicator
 			    UpdateLevels(bar);
 			    UpdateVolumeProfile(candle, bar);
 		    }
-        
+
 		    // Check for alerts on the last bar
-		    if (bar == CurrentBar - 1 && bar > 0) 
+		    if (bar == CurrentBar - 1 && bar > 0)
 		    {
 				    var prevCandle = GetCandle(bar - 1);
 				    CheckForAlerts(bar, candle, prevCandle);
@@ -815,20 +815,20 @@ public class DailyLinesExtended : Indicator
         _currentLow = 0;
 
         _currentOpen = 0;
-        
+
         _currentPeriodCandle.Clear();
         _previousPeriodCandle.Clear();
-    
+
         _currentPoc = 0;
         _currentVah = 0;
         _currentVal = 0;
         _currentPocBar = 0;
-    
+
         _prevPoc = 0;
         _prevVah = 0;
         _prevVal = 0;
         _prevPocBar = 0;
-        
+
         _lastOpenAlertBar = -1;
         _lastCloseAlertBar = -1;
         _lastHighAlertBar = -1;
@@ -837,7 +837,7 @@ public class DailyLinesExtended : Indicator
         _lastVahAlertBar = -1;
         _lastValAlertBar = -1;
     }
-    
+
     private void InitializeCalculation()
     {
 	    _openBar = _closeBar = _highBar = _lowBar = -1;
@@ -931,7 +931,7 @@ public class DailyLinesExtended : Indicator
                 (time.TimeOfDay <= _startTime && time.TimeOfDay <= EndTime && time.TimeOfDay >= TimeSpan.Zero))
             && !(prevTime.TimeOfDay <= _startTime && prevTime.TimeOfDay <= EndTime && prevTime.TimeOfDay >= TimeSpan.Zero);
     }
-    
+
     private bool IsNewPeriodSession(int bar)
     {
 	    return (((IsNewSession(bar) && !CustomSession) || (IsNewCustomSession(bar) && CustomSession)) &&
@@ -960,13 +960,13 @@ public class DailyLinesExtended : Indicator
 	    _currentClose = candle.Close;
 	    _currentHigh = candle.High;
 	    _currentLow = candle.Low;
-    
+
 	    // Calculate POC, VAH, VAL for the previous period before resetting
 	    SavePreviousPeriodVolumeProfile();
-    
+
 	    // Reset current period candle
 	    ResetCurrentPeriodCandle(candle, bar);
-    
+
 	    _lastSession = bar;
     }
 
@@ -976,7 +976,7 @@ public class DailyLinesExtended : Indicator
 	    {
 		    _previousPeriodCandle.Clear();
 		    _previousPeriodCandle.Type = Type;
-        
+
 		    // Copy the current period data to previous
 		    _prevPoc = _currentPoc;
 		    var valueArea = _currentPeriodCandle.GetValueArea(InstrumentInfo.TickSize, PlatformSettings.ValueAreaPercent);
@@ -994,7 +994,7 @@ public class DailyLinesExtended : Indicator
 	    _currentVah = 0;
 	    _currentVal = 0;
 	    _currentPocBar = bar;
-    
+
 	    // Add the first candle of the new period
 	    _currentPeriodCandle.AddCandle(candle, InstrumentInfo.TickSize);
     }
@@ -1015,7 +1015,7 @@ public class DailyLinesExtended : Indicator
 	    CheckLevelCrossing(bar, candle, prevCandle, _prevVal, ref _lastValAlertBar, UseValAlert, "Previous VAL");
     }
 
-    private void CheckLevelCrossing(int bar, IndicatorCandle candle, IndicatorCandle prevCandle, 
+    private void CheckLevelCrossing(int bar, IndicatorCandle candle, IndicatorCandle prevCandle,
 	    decimal level, ref int lastAlertBar, FilterBool useAlert, string levelName)
     {
 	    if (!useAlert.Value || lastAlertBar == bar || level <= 0)
@@ -1036,11 +1036,11 @@ public class DailyLinesExtended : Indicator
 	    else if (UseApproximationAlert)
 	    {
 		    decimal approximationDistance = ApproximationTicks * InstrumentInfo.TickSize;
-        
+
 		    // Check if price is within the approximation range
 		    bool isWithinRange = Math.Abs(candle.Close - level) <= approximationDistance &&
 		                         Math.Abs(prevCandle.Close - level) > approximationDistance;
-        
+
 		    if (isWithinRange)
 		    {
 			    triggered = true;
@@ -1054,7 +1054,7 @@ public class DailyLinesExtended : Indicator
 		    lastAlertBar = bar;
 	    }
     }
-    
+
     private void UpdateVolumeProfile(IndicatorCandle candle, int bar)
     {
 	    // Add this candle to the current period
@@ -1065,7 +1065,7 @@ public class DailyLinesExtended : Indicator
 	    {
 		    _currentPoc = _currentPeriodCandle.MaxValuePrice;
 		    _currentPocBar = bar;
-        
+
 		    // Get VAH and VAL
 		    var valueArea = _currentPeriodCandle.GetValueArea(InstrumentInfo.TickSize, PlatformSettings.ValueAreaPercent);
 		    _currentVah = valueArea.Item1;
@@ -1101,7 +1101,7 @@ public class DailyLinesExtended : Indicator
         context.FillPolygon(pen.Color, polygon);
         context.DrawString(renderText, _font, Color.White, Container.Region.Right + 6, y - 6);
     }
-    
+
     private string GetPeriodString()
 	{
 	    return Period switch
@@ -1120,9 +1120,9 @@ public class DailyLinesExtended : Indicator
 	{
 	    if (price <= 0)
 	        return;
-	        
+
 	    var y = ChartInfo.PriceChartContainer.GetYByPrice(price, false);
-	    
+
 	    if (DrawFromBar && startBar >= 0 && startBar <= LastVisibleBarNumber)
 	    {
 	        var x = ChartInfo.PriceChartContainer.GetXByBar(startBar, false);
@@ -1136,17 +1136,17 @@ public class DailyLinesExtended : Indicator
 	    {
 	        return; // Don't draw text if we're not drawing the line
 	    }
-	    
+
 	    if (ShowText)
 	        DrawString(context, text, y, pen.RenderObject.Color);
 	}
 
-	private void DrawPriceLabels(RenderContext context, bool isCurrentPeriod, decimal open, decimal close, 
-	    decimal high, decimal low, decimal poc, decimal vah, decimal val, 
+	private void DrawPriceLabels(RenderContext context, bool isCurrentPeriod, decimal open, decimal close,
+	    decimal high, decimal low, decimal poc, decimal vah, decimal val,
 	    int openBar, int closeBar, int highBar, int lowBar, int pocStartBar)
 	{
 	    // Check if we should draw the price label based on DrawFromBar setting and bar visibility
-	    bool ShouldDrawPrice(int bar, decimal price) => 
+	    bool ShouldDrawPrice(int bar, decimal price) =>
 	        ((bar >= 0 && bar <= LastVisibleBarNumber) || !DrawFromBar) && price > 0;
 
 	    if (ShouldDrawPrice(openBar, open))
@@ -1160,13 +1160,13 @@ public class DailyLinesExtended : Indicator
 
 	    if (ShouldDrawPrice(lowBar, low))
 	        DrawPrice(context, low, LowPen.RenderObject);
-	    
+
 	    if (ShouldDrawPrice(pocStartBar, poc))
 	        DrawPrice(context, poc, PocPen.RenderObject);
-	    
+
 	    if (ShouldDrawPrice(pocStartBar, vah))
 	        DrawPrice(context, vah, VahPen.RenderObject);
-	    
+
 	    if (ShouldDrawPrice(pocStartBar, val))
 	        DrawPrice(context, val, ValPen.RenderObject);
 	}
