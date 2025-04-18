@@ -635,6 +635,13 @@ public class DailyLinesExtended : Indicator
 
     [Display(ResourceType = typeof(Resources), Name = "CrossAlert", GroupName = "Val", Order = 376)]
     public FilterBool UseValAlert { get; set; } = new(false);
+    
+    [Display(ResourceType = typeof(Resources), Name = "ApproximationAlert", GroupName = "Alerts", Order = 380)]
+    public bool UseApproximationAlert { get; set; } = false;
+
+    [Display(ResourceType = typeof(Resources), Name = "ApproximationFilter", GroupName = "Alerts", Order = 385)]
+    [Range(1, 100)]
+    public int ApproximationTicks { get; set; } = 3;
 
     // Alerts
     [Display(ResourceType = typeof(Resources), Name = "AlertFile", GroupName = "Alerts", Order = 400)]
@@ -768,13 +775,10 @@ public class DailyLinesExtended : Indicator
 		    }
         
 		    // Check for alerts on the last bar
-		    if (bar == CurrentBar - 1)
+		    if (bar == CurrentBar - 1 && bar > 0) 
 		    {
-			    if (bar > 0)
-			    {
 				    var prevCandle = GetCandle(bar - 1);
 				    CheckForAlerts(bar, candle, prevCandle);
-			    }
 		    }
 	    }
 	    catch (Exception e)
@@ -1014,11 +1018,39 @@ public class DailyLinesExtended : Indicator
     private void CheckLevelCrossing(int bar, IndicatorCandle candle, IndicatorCandle prevCandle, 
 	    decimal level, ref int lastAlertBar, FilterBool useAlert, string levelName)
     {
-	    if (useAlert.Value && lastAlertBar != bar && level > 0 &&
-	        ((candle.Close >= level && prevCandle.Close <= level) ||
-	         (candle.Close <= level && prevCandle.Close >= level)))
+	    if (!useAlert.Value || lastAlertBar == bar || level <= 0)
+		    return;
+
+	    bool triggered = false;
+	    string message = $"{levelName} reached: {level}";
+
+	    // Direct crossing check
+	    bool directCrossing = (candle.Close >= level && prevCandle.Close <= level) ||
+	                          (candle.Close <= level && prevCandle.Close >= level);
+
+	    if (directCrossing)
 	    {
-		    AddAlert(AlertFile, InstrumentInfo.Instrument, $"{levelName} reached: {level}", AlertBGColor, AlertForeColor);
+		    triggered = true;
+	    }
+	    // Approximation check if enabled
+	    else if (UseApproximationAlert)
+	    {
+		    decimal approximationDistance = ApproximationTicks * InstrumentInfo.TickSize;
+        
+		    // Check if price is within the approximation range
+		    bool isWithinRange = Math.Abs(candle.Close - level) <= approximationDistance &&
+		                         Math.Abs(prevCandle.Close - level) > approximationDistance;
+        
+		    if (isWithinRange)
+		    {
+			    triggered = true;
+			    message = $"{levelName} approximation ({ApproximationTicks} ticks): {level}";
+		    }
+	    }
+
+	    if (triggered)
+	    {
+		    AddAlert(AlertFile, InstrumentInfo.Instrument, message, AlertBGColor, AlertForeColor);
 		    lastAlertBar = bar;
 	    }
     }
