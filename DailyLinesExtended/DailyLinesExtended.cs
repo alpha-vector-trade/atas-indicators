@@ -679,276 +679,60 @@ public class DailyLinesExtended : Indicator
     #region Protected methods
 
     protected override void OnRender(RenderContext context, DrawingLayouts layout)
-    {
-        if (ChartInfo is null)
-            return;
+	{
+	    if (ChartInfo is null)
+	        return;
 
-        string periodStr;
+	    string periodStr = GetPeriodString();
+	    bool isCurrentPeriod = Period is PeriodType.CurrentDay or PeriodType.CurrenWeek or PeriodType.CurrentMonth;
 
-        switch (Period)
-        {
-            case PeriodType.CurrentDay:
-                {
-                    periodStr = "Curr. Day ";
-                    break;
-                }
-            case PeriodType.PreviousDay:
-                {
-                    periodStr = "Prev. Day ";
-                    break;
-                }
-            case PeriodType.CurrenWeek:
-                {
-                    periodStr = "Curr. Week ";
-                    break;
-                }
-            case PeriodType.PreviousWeek:
-                {
-                    periodStr = "Prev. Week ";
-                    break;
-                }
-            case PeriodType.CurrentMonth:
-                {
-                    periodStr = "Curr. Month ";
-                    break;
-                }
-            case PeriodType.PreviousMonth:
-                {
-                    periodStr = "Prev. Month ";
-                    break;
-                }
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+	    // Get values based on period
+	    var open = isCurrentPeriod ? _currentOpen : _prevOpen;
+	    var close = isCurrentPeriod ? _currentClose : _prevClose;
+	    var high = isCurrentPeriod ? _currentHigh : _prevHigh;
+	    var low = isCurrentPeriod ? _currentLow : _prevLow;
+	    var poc = isCurrentPeriod ? _currentPoc : _prevPoc;
+	    var vah = isCurrentPeriod ? _currentVah : _prevVah;
+	    var val = isCurrentPeriod ? _currentVal : _prevVal;
 
-        var isLastPeriod = Period is PeriodType.CurrentDay or PeriodType.CurrentMonth or PeriodType.CurrenWeek;
+	    // Get bars based on period
+	    var openBar = isCurrentPeriod ? _openBar : _prevOpenBar;
+	    var closeBar = isCurrentPeriod ? _closeBar : _prevCloseBar;
+	    var highBar = isCurrentPeriod ? _highBar : _prevHighBar;
+	    var lowBar = isCurrentPeriod ? _lowBar : _prevLowBar;
+	    var pocStartBar = isCurrentPeriod ? _openBar : _prevOpenBar;
 
-        var open = isLastPeriod
-            ? _currentOpen
-            : _prevOpen;
-
-        var close = isLastPeriod
-            ? _currentClose
-            : _prevClose;
-
-        var high = isLastPeriod
-            ? _currentHigh
-            : _prevHigh;
-
-        var low = isLastPeriod
-            ? _currentLow
-            : _prevLow;
-
-        var isCurrentPeriod = Period is PeriodType.CurrentDay or PeriodType.CurrenWeek or PeriodType.CurrentMonth;
-
-        if (DrawFromBar)
-        {
-            var openBar = isLastPeriod
-                ? _openBar
-                : _prevOpenBar;
-
-            var closeBar = isLastPeriod
-                ? _closeBar
-                : _prevCloseBar;
-
-            var highBar = isLastPeriod
-                ? _highBar
-                : _prevHighBar;
-
-            var lowBar = isLastPeriod
-                ? _lowBar
-                : _prevLowBar;
-
-            if (openBar >= 0 && openBar <= LastVisibleBarNumber)
-            {
-                var x = ChartInfo.PriceChartContainer.GetXByBar(openBar, false);
-                var y = ChartInfo.PriceChartContainer.GetYByPrice(open, false);
-                context.DrawLine(OpenPen.RenderObject, x, y, Container.Region.Right, y);
-                var renderText = string.IsNullOrEmpty(OpenText) ? periodStr + "Open" : OpenText;
-
-                if (ShowText)
-                    DrawString(context, renderText, y, OpenPen.RenderObject.Color);
-            }
-
-            if (!isCurrentPeriod && closeBar >= 0 && closeBar <= LastVisibleBarNumber)
-            {
-                var x = ChartInfo.PriceChartContainer.GetXByBar(closeBar, false);
-                var y = ChartInfo.PriceChartContainer.GetYByPrice(close, false);
-                context.DrawLine(ClosePen.RenderObject, x, y, Container.Region.Right, y);
-                var renderText = string.IsNullOrEmpty(CloseText) ? periodStr + "Close" : CloseText;
-
-                if (ShowText)
-                    DrawString(context, renderText, y, ClosePen.RenderObject.Color);
-            }
-
-            if (highBar >= 0 && highBar <= LastVisibleBarNumber)
-            {
-                var x = ChartInfo.PriceChartContainer.GetXByBar(highBar, false);
-                var y = ChartInfo.PriceChartContainer.GetYByPrice(high, false);
-                context.DrawLine(HighPen.RenderObject, x, y, Container.Region.Right, y);
-                var renderText = string.IsNullOrEmpty(HighText) ? periodStr + "High" : HighText;
-
-                if (ShowText)
-                    DrawString(context, renderText, y, HighPen.RenderObject.Color);
-            }
-
-            if (lowBar >= 0 && lowBar <= LastVisibleBarNumber)
-            {
-                var x = ChartInfo.PriceChartContainer.GetXByBar(lowBar, false);
-                var y = ChartInfo.PriceChartContainer.GetYByPrice(low, false);
-                context.DrawLine(LowPen.RenderObject, x, y, Container.Region.Right, y);
-                var renderText = string.IsNullOrEmpty(LowText) ? periodStr + "Low" : LowText;
-
-                if (ShowText)
-                    DrawString(context, renderText, y, LowPen.RenderObject.Color);
-            }
-        }
-        else
-        {
-            var yOpen = ChartInfo.PriceChartContainer.GetYByPrice(open, false);
-            context.DrawLine(OpenPen.RenderObject, Container.Region.Left, yOpen, Container.Region.Right, yOpen);
-            var renderText = string.IsNullOrEmpty(OpenText) ? periodStr + "Open" : OpenText;
-
-            if (ShowText)
-                DrawString(context, renderText, yOpen, OpenPen.RenderObject.Color);
-
-            if (!isCurrentPeriod)
-            {
-                var yClose = ChartInfo.PriceChartContainer.GetYByPrice(close, false);
-                context.DrawLine(ClosePen.RenderObject, Container.Region.Left, yClose, Container.Region.Right, yClose);
-                renderText = string.IsNullOrEmpty(CloseText) ? periodStr + "Close" : CloseText;
-
-                if (ShowText)
-                    DrawString(context, renderText, yClose, ClosePen.RenderObject.Color);
-            }
-
-            var yHigh = ChartInfo.PriceChartContainer.GetYByPrice(high, false);
-            context.DrawLine(HighPen.RenderObject, Container.Region.Left, yHigh, Container.Region.Right, yHigh);
-            renderText = string.IsNullOrEmpty(HighText) ? periodStr + "High" : HighText;
-
-            if (ShowText)
-                DrawString(context, renderText, yHigh, HighPen.RenderObject.Color);
-
-            var yLow = ChartInfo.PriceChartContainer.GetYByPrice(low, false);
-            context.DrawLine(LowPen.RenderObject, Container.Region.Left, yLow, Container.Region.Right, yLow);
-            renderText = string.IsNullOrEmpty(LowText) ? periodStr + "Low" : LowText;
-
-            if (ShowText)
-                DrawString(context, renderText, yLow, LowPen.RenderObject.Color);
-        }
-        
-        // Get POC, VAH, VAL values based on period
-        var poc = isLastPeriod ? _currentPoc : _prevPoc;
-        var vah = isLastPeriod ? _currentVah : _prevVah;
-        var val = isLastPeriod ? _currentVal : _prevVal;
-    
-        // For DrawFromBar, we need the first bar of the period
-        var pocStartBar = isLastPeriod ? _openBar : _prevOpenBar;
-        
-        // Draw POC line
+	    // Draw all lines
+	    DrawLevelLine(context, open, openBar, OpenPen, string.IsNullOrEmpty(OpenText) ? periodStr + "Open" : OpenText);
+	    
+	    if (!isCurrentPeriod)
+	        DrawLevelLine(context, close, closeBar, ClosePen, string.IsNullOrEmpty(CloseText) ? periodStr + "Close" : CloseText);
+	    
+	    DrawLevelLine(context, high, highBar, HighPen, string.IsNullOrEmpty(HighText) ? periodStr + "High" : HighText);
+	    DrawLevelLine(context, low, lowBar, LowPen, string.IsNullOrEmpty(LowText) ? periodStr + "Low" : LowText);
+	    
 	    if (poc > 0)
-	    {
-	        if (DrawFromBar && pocStartBar >= 0 && pocStartBar <= LastVisibleBarNumber)
-	        {
-	            var x = ChartInfo.PriceChartContainer.GetXByBar(pocStartBar, false);
-	            var y = ChartInfo.PriceChartContainer.GetYByPrice(poc, false);
-	            context.DrawLine(PocPen.RenderObject, x, y, Container.Region.Right, y);
-	            var renderText = string.IsNullOrEmpty(PocText) ? periodStr + "POC" : PocText;
-	            
-	            if (ShowText)
-	                DrawString(context, renderText, y, PocPen.RenderObject.Color);
-	        }
-	        else if (!DrawFromBar)
-	        {
-	            var y = ChartInfo.PriceChartContainer.GetYByPrice(poc, false);
-	            context.DrawLine(PocPen.RenderObject, Container.Region.Left, y, Container.Region.Right, y);
-	            var renderText = string.IsNullOrEmpty(PocText) ? periodStr + "POC" : PocText;
-	            
-	            if (ShowText)
-	                DrawString(context, renderText, y, PocPen.RenderObject.Color);
-	        }
-	    }
+	        DrawLevelLine(context, poc, pocStartBar, PocPen, string.IsNullOrEmpty(PocText) ? periodStr + "POC" : PocText);
 	    
-	    // Draw VAH line
 	    if (vah > 0)
-	    {
-	        if (DrawFromBar && pocStartBar >= 0 && pocStartBar <= LastVisibleBarNumber)
-	        {
-	            var x = ChartInfo.PriceChartContainer.GetXByBar(pocStartBar, false);
-	            var y = ChartInfo.PriceChartContainer.GetYByPrice(vah, false);
-	            context.DrawLine(VahPen.RenderObject, x, y, Container.Region.Right, y);
-	            var renderText = string.IsNullOrEmpty(VahText) ? periodStr + "VAH" : VahText;
-	            
-	            if (ShowText)
-	                DrawString(context, renderText, y, VahPen.RenderObject.Color);
-	        }
-	        else if (!DrawFromBar)
-	        {
-	            var y = ChartInfo.PriceChartContainer.GetYByPrice(vah, false);
-	            context.DrawLine(VahPen.RenderObject, Container.Region.Left, y, Container.Region.Right, y);
-	            var renderText = string.IsNullOrEmpty(VahText) ? periodStr + "VAH" : VahText;
-	            
-	            if (ShowText)
-	                DrawString(context, renderText, y, VahPen.RenderObject.Color);
-	        }
-	    }
+	        DrawLevelLine(context, vah, pocStartBar, VahPen, string.IsNullOrEmpty(VahText) ? periodStr + "VAH" : VahText);
 	    
-	    // Draw VAL line
 	    if (val > 0)
+	        DrawLevelLine(context, val, pocStartBar, ValPen, string.IsNullOrEmpty(ValText) ? periodStr + "VAL" : ValText);
+
+	    // Draw price labels if enabled
+	    if (ShowPrice)
 	    {
-	        if (DrawFromBar && pocStartBar >= 0 && pocStartBar <= LastVisibleBarNumber)
-	        {
-	            var x = ChartInfo.PriceChartContainer.GetXByBar(pocStartBar, false);
-	            var y = ChartInfo.PriceChartContainer.GetYByPrice(val, false);
-	            context.DrawLine(ValPen.RenderObject, x, y, Container.Region.Right, y);
-	            var renderText = string.IsNullOrEmpty(ValText) ? periodStr + "VAL" : ValText;
-	            
-	            if (ShowText)
-	                DrawString(context, renderText, y, ValPen.RenderObject.Color);
-	        }
-	        else if (!DrawFromBar)
-	        {
-	            var y = ChartInfo.PriceChartContainer.GetYByPrice(val, false);
-	            context.DrawLine(ValPen.RenderObject, Container.Region.Left, y, Container.Region.Right, y);
-	            var renderText = string.IsNullOrEmpty(ValText) ? periodStr + "VAL" : ValText;
-	            
-	            if (ShowText)
-	                DrawString(context, renderText, y, ValPen.RenderObject.Color);
-	        }
+	        var bounds = context.ClipBounds;
+	        context.ResetClip();
+	        context.SetTextRenderingHint(RenderTextRenderingHint.Aliased);
+
+	        DrawPriceLabels(context, isCurrentPeriod, open, close, high, low, poc, vah, val, openBar, closeBar, highBar, lowBar, pocStartBar);
+
+	        context.SetTextRenderingHint(RenderTextRenderingHint.AntiAlias);
+	        context.SetClip(bounds);
 	    }
-
-        if (!ShowPrice)
-            return;
-
-        var bounds = context.ClipBounds;
-        context.ResetClip();
-        context.SetTextRenderingHint(RenderTextRenderingHint.Aliased);
-
-        if ((_openBar >= 0 && _openBar <= LastVisibleBarNumber) || !DrawFromBar)
-            DrawPrice(context, open, OpenPen.RenderObject);
-
-        if ((!isCurrentPeriod && _closeBar >= 0 && _closeBar <= LastVisibleBarNumber) || !DrawFromBar)
-            DrawPrice(context, close, ClosePen.RenderObject);
-
-        if ((_highBar >= 0 && _highBar <= LastVisibleBarNumber) || !DrawFromBar)
-            DrawPrice(context, high, HighPen.RenderObject);
-
-        if ((_lowBar >= 0 && _lowBar <= LastVisibleBarNumber) || !DrawFromBar)
-            DrawPrice(context, low, LowPen.RenderObject);
-        
-        // Add POC, VAH, VAL prices to display
-        if ((pocStartBar >= 0 && pocStartBar <= LastVisibleBarNumber && poc > 0) || (!DrawFromBar && poc > 0))
-	        DrawPrice(context, poc, PocPen.RenderObject);
-        
-        if ((pocStartBar >= 0 && pocStartBar <= LastVisibleBarNumber && vah > 0) || (!DrawFromBar && vah > 0))
-	        DrawPrice(context, vah, VahPen.RenderObject);
-        
-        if ((pocStartBar >= 0 && pocStartBar <= LastVisibleBarNumber && val > 0) || (!DrawFromBar && val > 0))
-	        DrawPrice(context, val, ValPen.RenderObject);
-
-        context.SetTextRenderingHint(RenderTextRenderingHint.AntiAlias);
-        context.SetClip(bounds);
-    }
+	}
 
     protected override void OnRecalculate()
     {
@@ -957,192 +741,46 @@ public class DailyLinesExtended : Indicator
 
     protected override void OnCalculate(int bar, decimal value)
     {
-        try
-        {
-            if (bar == 0)
-            {
-                _openBar = _closeBar = _highBar = _lowBar = -1;
+	    try
+	    {
+		    if (bar == 0)
+		    {
+			    InitializeCalculation();
+		    }
 
-                _lastSession = bar;
+		    if (bar < _targetBar)
+			    return;
 
-                var days = 0;
+		    var candle = GetCandle(bar);
+		    bool isNewSession = IsNewPeriodSession(bar);
 
-                for (var i = CurrentBar - 1; i >= 0; i--)
-                {
-                    _targetBar = i;
+		    if (isNewSession && (_lastSession != bar || bar == 0))
+		    {
+			    HandleNewPeriod(bar, candle);
+		    }
+		    else
+		    {
+			    if (CustomSession && !InsideSession(bar) && Period is PeriodType.CurrentDay or PeriodType.PreviousDay)
+				    return;
 
-                    if (!IsNewSession(i))
-                        continue;
-
-                    days++;
-
-                    if (days == _days)
-                        break;
-                }
-            }
-
-            if (bar < _targetBar)
-                return;
-
-            var candle = GetCandle(bar);
-            bool isCurrentPeriod = Period is PeriodType.CurrentDay or PeriodType.CurrenWeek or PeriodType.CurrentMonth;
-
-            var isNewSession = (((IsNewSession(bar) && !CustomSession) || (IsNewCustomSession(bar) && CustomSession)) &&
-                    Period is PeriodType.CurrentDay or PeriodType.PreviousDay)
-                || (Period is PeriodType.CurrenWeek or PeriodType.PreviousWeek && IsNewWeek(bar))
-                || (Period is PeriodType.CurrentMonth or PeriodType.PreviousMonth && IsNewMonth(bar))
-                || bar == _targetBar;
-
-            if (isNewSession && (_lastSession != bar || bar == 0))
-            {
-                _prevOpenBar = _openBar;
-                _prevCloseBar = _closeBar;
-                _prevHighBar = _highBar;
-                _prevLowBar = _lowBar;
-
-                _prevOpen = _currentOpen;
-                _prevClose = _currentClose;
-                _prevHigh = _currentHigh;
-                _prevLow = _currentLow;
-
-                _openBar = _closeBar = _highBar = _lowBar = bar;
-                _currentOpen = candle.Open;
-                _currentClose = candle.Close;
-                _currentHigh = candle.High;
-                _currentLow = candle.Low;
-                
-                // Calculate POC, VAH, VAL for the previous period before resetting
-                if (_currentPeriodCandle.Volume > 0)
-                {
-	                _previousPeriodCandle.Clear();
-	                _previousPeriodCandle.Type = Type;
-                
-	                // Copy the current period data to previous
-	                _prevPoc = _currentPoc;
-	                var valueArea = _currentPeriodCandle.GetValueArea(InstrumentInfo.TickSize, PlatformSettings.ValueAreaPercent);
-	                _prevVah = valueArea.Item1;
-	                _prevVal = valueArea.Item2;
-	                _prevPocBar = _currentPocBar;
-                }
-            
-                // Reset current period candle
-                _currentPeriodCandle.Clear();
-                _currentPeriodCandle.Type = Type;
-                _currentPoc = 0;
-                _currentVah = 0;
-                _currentVal = 0;
-                _currentPocBar = bar;
-            
-                // Add the first candle of the new period
-                _currentPeriodCandle.AddCandle(candle, InstrumentInfo.TickSize);
-
-                _lastSession = bar;
-            }
-            else
-            {
-                if (CustomSession && !InsideSession(bar) && Period is PeriodType.CurrentDay or PeriodType.PreviousDay)
-                    return;
-
-                UpdateLevels(bar);
-                
-                // Add this candle to the current period
-                _currentPeriodCandle.AddCandle(candle, InstrumentInfo.TickSize);
-            
-                // Update POC
-                if (_currentPeriodCandle.MaxValue > 0)
-                {
-	                _currentPoc = _currentPeriodCandle.MaxValuePrice;
-	                _currentPocBar = bar;
-                
-	                // Get VAH and VAL
-	                var valueArea = _currentPeriodCandle.GetValueArea(InstrumentInfo.TickSize, PlatformSettings.ValueAreaPercent);
-	                _currentVah = valueArea.Item1;
-	                _currentVal = valueArea.Item2;
-                }
-            }
-            
-            if (bar != CurrentBar - 1)
-                return;
-
-            if (bar > 0 && !isCurrentPeriod)
-            {
-                var prevCandle = GetCandle(bar - 1);
-
-                // Check for Open level crossing (in either direction)
-                if (UseOpenAlert.Value && _lastOpenAlertBar != bar &&
-                    ((candle.Close >= _prevOpen && prevCandle.Close <= _prevOpen) ||
-                     (candle.Close <= _prevOpen && prevCandle.Close >= _prevOpen)))
-                {
-                    AddAlert(AlertFile, InstrumentInfo.Instrument, $"Previous Open reached: {_prevOpen}", AlertBGColor,
-                        AlertForeColor);
-                    _lastOpenAlertBar = bar;
-                }
-
-                // Check for Close level crossing (in either direction)
-                if (UseCloseAlert.Value && _lastCloseAlertBar != bar &&
-                    ((candle.Close >= _prevClose && prevCandle.Close <= _prevClose) ||
-                     (candle.Close <= _prevClose && prevCandle.Close >= _prevClose)))
-                {
-                    AddAlert(AlertFile, InstrumentInfo.Instrument, $"Previous Close reached: {_prevClose}", AlertBGColor,
-                        AlertForeColor);
-                    _lastCloseAlertBar = bar;
-                }
-
-                // Check for High level crossing (in either direction)
-                if (UseHighAlert.Value && _lastHighAlertBar != bar &&
-                    ((candle.Close >= _prevHigh && prevCandle.Close <= _prevHigh) ||
-                     (candle.Close <= _prevHigh && prevCandle.Close >= _prevHigh)))
-                {
-                    AddAlert(AlertFile, InstrumentInfo.Instrument, $"Previous High reached: {_prevHigh}", AlertBGColor,
-                        AlertForeColor);
-                    _lastHighAlertBar = bar;
-                }
-
-                // Check for Low level crossing (in either direction)
-                if (UseLowAlert.Value && _lastLowAlertBar != bar &&
-                    ((candle.Close >= _prevLow && prevCandle.Close <= _prevLow) ||
-                     (candle.Close <= _prevLow && prevCandle.Close >= _prevLow)))
-                {
-                    AddAlert(AlertFile, InstrumentInfo.Instrument, $"Previous Low reached: {_prevLow}", AlertBGColor,
-                        AlertForeColor);
-                    _lastLowAlertBar = bar;
-                }
-                
-                // Check for POC level crossing
-                if (UsePocAlert.Value && _lastPocAlertBar != bar &&
-                    ((candle.Close >= _prevPoc && prevCandle.Close <= _prevPoc) ||
-                     (candle.Close <= _prevPoc && prevCandle.Close >= _prevPoc)))
-                {
-	                AddAlert(AlertFile, InstrumentInfo.Instrument, $"Previous POC reached: {_prevPoc}", AlertBGColor,
-		                AlertForeColor);
-	                _lastPocAlertBar = bar;
-                }
-            
-                // Check for VAH level crossing
-                if (UseVahAlert.Value && _lastVahAlertBar != bar &&
-                    ((candle.Close >= _prevVah && prevCandle.Close <= _prevVah) ||
-                     (candle.Close <= _prevVah && prevCandle.Close >= _prevVah)))
-                {
-	                AddAlert(AlertFile, InstrumentInfo.Instrument, $"Previous VAH reached: {_prevVah}", AlertBGColor,
-		                AlertForeColor);
-	                _lastVahAlertBar = bar;
-                }
-            
-                // Check for VAL level crossing
-                if (UseValAlert.Value && _lastValAlertBar != bar &&
-                    ((candle.Close >= _prevVal && prevCandle.Close <= _prevVal) ||
-                     (candle.Close <= _prevVal && prevCandle.Close >= _prevVal)))
-                {
-	                AddAlert(AlertFile, InstrumentInfo.Instrument, $"Previous VAL reached: {_prevVal}", AlertBGColor,
-		                AlertForeColor);
-	                _lastValAlertBar = bar;
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            this.LogError("Daily lines error ", e);
-        }
+			    UpdateLevels(bar);
+			    UpdateVolumeProfile(candle, bar);
+		    }
+        
+		    // Check for alerts on the last bar
+		    if (bar == CurrentBar - 1)
+		    {
+			    if (bar > 0)
+			    {
+				    var prevCandle = GetCandle(bar - 1);
+				    CheckForAlerts(bar, candle, prevCandle);
+			    }
+		    }
+	    }
+	    catch (Exception e)
+	    {
+		    this.LogError("Daily lines error ", e);
+	    }
     }
 
     #endregion
@@ -1194,6 +832,23 @@ public class DailyLinesExtended : Indicator
         _lastPocAlertBar = -1;
         _lastVahAlertBar = -1;
         _lastValAlertBar = -1;
+    }
+    
+    private void InitializeCalculation()
+    {
+	    _openBar = _closeBar = _highBar = _lowBar = -1;
+	    _lastSession = 0;
+
+	    var days = 0;
+	    for (var i = CurrentBar - 1; i >= 0; i--)
+	    {
+		    _targetBar = i;
+		    if (!IsNewSession(i))
+			    continue;
+		    days++;
+		    if (days == _days)
+			    break;
+	    }
     }
 
     private void UpdateLevels(int bar)
@@ -1272,6 +927,119 @@ public class DailyLinesExtended : Indicator
                 (time.TimeOfDay <= _startTime && time.TimeOfDay <= EndTime && time.TimeOfDay >= TimeSpan.Zero))
             && !(prevTime.TimeOfDay <= _startTime && prevTime.TimeOfDay <= EndTime && prevTime.TimeOfDay >= TimeSpan.Zero);
     }
+    
+    private bool IsNewPeriodSession(int bar)
+    {
+	    return (((IsNewSession(bar) && !CustomSession) || (IsNewCustomSession(bar) && CustomSession)) &&
+	            Period is PeriodType.CurrentDay or PeriodType.PreviousDay)
+	           || (Period is PeriodType.CurrenWeek or PeriodType.PreviousWeek && IsNewWeek(bar))
+	           || (Period is PeriodType.CurrentMonth or PeriodType.PreviousMonth && IsNewMonth(bar))
+	           || bar == _targetBar;
+    }
+
+    private void HandleNewPeriod(int bar, IndicatorCandle candle)
+    {
+	    // Save previous period values
+	    _prevOpenBar = _openBar;
+	    _prevCloseBar = _closeBar;
+	    _prevHighBar = _highBar;
+	    _prevLowBar = _lowBar;
+
+	    _prevOpen = _currentOpen;
+	    _prevClose = _currentClose;
+	    _prevHigh = _currentHigh;
+	    _prevLow = _currentLow;
+
+	    // Initialize new period
+	    _openBar = _closeBar = _highBar = _lowBar = bar;
+	    _currentOpen = candle.Open;
+	    _currentClose = candle.Close;
+	    _currentHigh = candle.High;
+	    _currentLow = candle.Low;
+    
+	    // Calculate POC, VAH, VAL for the previous period before resetting
+	    SavePreviousPeriodVolumeProfile();
+    
+	    // Reset current period candle
+	    ResetCurrentPeriodCandle(candle, bar);
+    
+	    _lastSession = bar;
+    }
+
+    private void SavePreviousPeriodVolumeProfile()
+    {
+	    if (_currentPeriodCandle.Volume > 0)
+	    {
+		    _previousPeriodCandle.Clear();
+		    _previousPeriodCandle.Type = Type;
+        
+		    // Copy the current period data to previous
+		    _prevPoc = _currentPoc;
+		    var valueArea = _currentPeriodCandle.GetValueArea(InstrumentInfo.TickSize, PlatformSettings.ValueAreaPercent);
+		    _prevVah = valueArea.Item1;
+		    _prevVal = valueArea.Item2;
+		    _prevPocBar = _currentPocBar;
+	    }
+    }
+
+    private void ResetCurrentPeriodCandle(IndicatorCandle candle, int bar)
+    {
+	    _currentPeriodCandle.Clear();
+	    _currentPeriodCandle.Type = Type;
+	    _currentPoc = 0;
+	    _currentVah = 0;
+	    _currentVal = 0;
+	    _currentPocBar = bar;
+    
+	    // Add the first candle of the new period
+	    _currentPeriodCandle.AddCandle(candle, InstrumentInfo.TickSize);
+    }
+
+    private void CheckForAlerts(int bar, IndicatorCandle candle, IndicatorCandle prevCandle)
+    {
+	    bool isCurrentPeriod = Period is PeriodType.CurrentDay or PeriodType.CurrenWeek or PeriodType.CurrentMonth;
+	    if (bar <= 0 || isCurrentPeriod)
+		    return;
+
+	    // Check for level crossings
+	    CheckLevelCrossing(bar, candle, prevCandle, _prevOpen, ref _lastOpenAlertBar, UseOpenAlert, "Previous Open");
+	    CheckLevelCrossing(bar, candle, prevCandle, _prevClose, ref _lastCloseAlertBar, UseCloseAlert, "Previous Close");
+	    CheckLevelCrossing(bar, candle, prevCandle, _prevHigh, ref _lastHighAlertBar, UseHighAlert, "Previous High");
+	    CheckLevelCrossing(bar, candle, prevCandle, _prevLow, ref _lastLowAlertBar, UseLowAlert, "Previous Low");
+	    CheckLevelCrossing(bar, candle, prevCandle, _prevPoc, ref _lastPocAlertBar, UsePocAlert, "Previous POC");
+	    CheckLevelCrossing(bar, candle, prevCandle, _prevVah, ref _lastVahAlertBar, UseVahAlert, "Previous VAH");
+	    CheckLevelCrossing(bar, candle, prevCandle, _prevVal, ref _lastValAlertBar, UseValAlert, "Previous VAL");
+    }
+
+    private void CheckLevelCrossing(int bar, IndicatorCandle candle, IndicatorCandle prevCandle, 
+	    decimal level, ref int lastAlertBar, FilterBool useAlert, string levelName)
+    {
+	    if (useAlert.Value && lastAlertBar != bar && level > 0 &&
+	        ((candle.Close >= level && prevCandle.Close <= level) ||
+	         (candle.Close <= level && prevCandle.Close >= level)))
+	    {
+		    AddAlert(AlertFile, InstrumentInfo.Instrument, $"{levelName} reached: {level}", AlertBGColor, AlertForeColor);
+		    lastAlertBar = bar;
+	    }
+    }
+    
+    private void UpdateVolumeProfile(IndicatorCandle candle, int bar)
+    {
+	    // Add this candle to the current period
+	    _currentPeriodCandle.AddCandle(candle, InstrumentInfo.TickSize);
+
+	    // Update POC
+	    if (_currentPeriodCandle.MaxValue > 0)
+	    {
+		    _currentPoc = _currentPeriodCandle.MaxValuePrice;
+		    _currentPocBar = bar;
+        
+		    // Get VAH and VAL
+		    var valueArea = _currentPeriodCandle.GetValueArea(InstrumentInfo.TickSize, PlatformSettings.ValueAreaPercent);
+		    _currentVah = valueArea.Item1;
+		    _currentVal = valueArea.Item2;
+	    }
+    }
 
     private void DrawString(RenderContext context, string renderText, int yPrice, Color color)
     {
@@ -1301,6 +1069,75 @@ public class DailyLinesExtended : Indicator
         context.FillPolygon(pen.Color, polygon);
         context.DrawString(renderText, _font, Color.White, Container.Region.Right + 6, y - 6);
     }
+    
+    private string GetPeriodString()
+	{
+	    return Period switch
+	    {
+	        PeriodType.CurrentDay => "Curr. Day ",
+	        PeriodType.PreviousDay => "Prev. Day ",
+	        PeriodType.CurrenWeek => "Curr. Week ",
+	        PeriodType.PreviousWeek => "Prev. Week ",
+	        PeriodType.CurrentMonth => "Curr. Month ",
+	        PeriodType.PreviousMonth => "Prev. Month ",
+	        _ => throw new ArgumentOutOfRangeException()
+	    };
+	}
+
+	private void DrawLevelLine(RenderContext context, decimal price, int startBar, PenSettings pen, string text)
+	{
+	    if (price <= 0)
+	        return;
+	        
+	    var y = ChartInfo.PriceChartContainer.GetYByPrice(price, false);
+	    
+	    if (DrawFromBar && startBar >= 0 && startBar <= LastVisibleBarNumber)
+	    {
+	        var x = ChartInfo.PriceChartContainer.GetXByBar(startBar, false);
+	        context.DrawLine(pen.RenderObject, x, y, Container.Region.Right, y);
+	    }
+	    else if (!DrawFromBar)
+	    {
+	        context.DrawLine(pen.RenderObject, Container.Region.Left, y, Container.Region.Right, y);
+	    }
+	    else
+	    {
+	        return; // Don't draw text if we're not drawing the line
+	    }
+	    
+	    if (ShowText)
+	        DrawString(context, text, y, pen.RenderObject.Color);
+	}
+
+	private void DrawPriceLabels(RenderContext context, bool isCurrentPeriod, decimal open, decimal close, 
+	    decimal high, decimal low, decimal poc, decimal vah, decimal val, 
+	    int openBar, int closeBar, int highBar, int lowBar, int pocStartBar)
+	{
+	    // Check if we should draw the price label based on DrawFromBar setting and bar visibility
+	    bool ShouldDrawPrice(int bar, decimal price) => 
+	        ((bar >= 0 && bar <= LastVisibleBarNumber) || !DrawFromBar) && price > 0;
+
+	    if (ShouldDrawPrice(openBar, open))
+	        DrawPrice(context, open, OpenPen.RenderObject);
+
+	    if (!isCurrentPeriod && ShouldDrawPrice(closeBar, close))
+	        DrawPrice(context, close, ClosePen.RenderObject);
+
+	    if (ShouldDrawPrice(highBar, high))
+	        DrawPrice(context, high, HighPen.RenderObject);
+
+	    if (ShouldDrawPrice(lowBar, low))
+	        DrawPrice(context, low, LowPen.RenderObject);
+	    
+	    if (ShouldDrawPrice(pocStartBar, poc))
+	        DrawPrice(context, poc, PocPen.RenderObject);
+	    
+	    if (ShouldDrawPrice(pocStartBar, vah))
+	        DrawPrice(context, vah, VahPen.RenderObject);
+	    
+	    if (ShouldDrawPrice(pocStartBar, val))
+	        DrawPrice(context, val, ValPen.RenderObject);
+	}
 
     #endregion
 }
