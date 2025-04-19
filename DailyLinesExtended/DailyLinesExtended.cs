@@ -739,9 +739,7 @@ public class DailyLinesExtended : Indicator
 	    try
 	    {
 		    if (bar == 0)
-		    {
 			    InitializeCalculation();
-		    }
 
 		    if (bar < _targetBar)
 			    return;
@@ -765,8 +763,8 @@ public class DailyLinesExtended : Indicator
 		    // Check for alerts on the last bar
 		    if (bar == CurrentBar - 1 && bar > 0)
 		    {
-				    var prevCandle = GetCandle(bar - 1);
-				    CheckForAlerts(bar, candle, prevCandle);
+			    var prevCandle = GetCandle(bar - 1);
+			    CheckForAlerts(bar, candle, prevCandle);
 		    }
 	    }
 	    catch (Exception e)
