@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SessionColorExtended", "Ses
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatiosExtended", "RatiosExtended\RatiosExtended.csproj", "{2088DDD0-4498-474F-B914-06D5DFE7D626}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpeningRange", "OpeningRange\OpeningRange.csproj", "{B59B5F61-CB2F-477C-9123-CAA59EBAE074}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2088DDD0-4498-474F-B914-06D5DFE7D626}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2088DDD0-4498-474F-B914-06D5DFE7D626}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2088DDD0-4498-474F-B914-06D5DFE7D626}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B59B5F61-CB2F-477C-9123-CAA59EBAE074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B59B5F61-CB2F-477C-9123-CAA59EBAE074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B59B5F61-CB2F-477C-9123-CAA59EBAE074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B59B5F61-CB2F-477C-9123-CAA59EBAE074}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
