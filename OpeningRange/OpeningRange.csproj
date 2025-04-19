@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0-windows7.0</TargetFramework>
         <RootNamespace>ATAS.Indicators.Technical</RootNamespace>
-        <AssemblyName>ATAS.Indicators.WeeklyOpeningRange</AssemblyName>
+        <AssemblyName>ATAS.Indicators.OpeningRange</AssemblyName>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <LangVersion>latest</LangVersion>
         <UseWPF>true</UseWPF>
