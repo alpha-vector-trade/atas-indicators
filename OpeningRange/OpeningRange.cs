@@ -130,6 +130,12 @@ public class OpeningRange : Indicator
     [Display(Name = "Extend Lines", GroupName = "Display", Order = 75)]
     public bool ExtendLines { get; set; } = false;
 
+    [Display(Name = "Show Area", GroupName = "Display", Order = 76)]
+    public bool ShowArea { get; set; } = false;
+
+    [Display(Name = "Area Color", GroupName = "Display", Order = 77)]
+    public Color AreaColor { get; set; } = Color.FromArgb(80, Color.Blue);
+
     [Display(Name = "High Line", GroupName = "High Range", Order = 80)]
     public PenSettings HighPen { get; set; } = new() { Color = DefaultColors.Green.Convert(), Width = 2 };
 
@@ -373,60 +379,70 @@ public class OpeningRange : Indicator
     }
 
     private void DrawRangeLines(RenderContext context, decimal high, decimal low, int highBar, int lowBar, int startBar)
+{
+    var timeFrameLabel = _timeFrame == TimeFrameType.Weekly ? "Weekly" : "Daily";
+
+    // Determine the end X position for the lines
+    int endX;
+
+    if (ExtendLines)
     {
-        var timeFrameLabel = _timeFrame == TimeFrameType.Weekly ? "Weekly" : "Daily";
-
-        // Determine the end X position for the lines
-        int endX;
-
-        if (ExtendLines)
-        {
-            // Extend to the right edge of the chart
-            endX = Container.Region.Right;
-        }
-        else
-        {
-            // Find the end bar for this range period
-            int endBar = FindEndBarForRange(startBar);
-            endX = ChartInfo.PriceChartContainer.GetXByBar(endBar, false);
-        }
-
-        // Draw high line
-        var yHigh = ChartInfo.PriceChartContainer.GetYByPrice(high, false);
-        context.DrawLine(HighPen.RenderObject, ChartInfo.PriceChartContainer.GetXByBar(startBar, false), yHigh, endX,
-            yHigh);
-
-        if (ShowText)
-        {
-            var highText = string.IsNullOrEmpty(HighText) ? $"{timeFrameLabel} Range High" : HighText;
-            DrawStringAtLineEnd(context, highText, yHigh, endX, HighPen.RenderObject.Color);
-        }
-
-        // Draw low line
-        var yLow = ChartInfo.PriceChartContainer.GetYByPrice(low, false);
-        context.DrawLine(LowPen.RenderObject, ChartInfo.PriceChartContainer.GetXByBar(startBar, false), yLow, endX,
-            yLow);
-
-        if (ShowText)
-        {
-            var lowText = string.IsNullOrEmpty(LowText) ? $"{timeFrameLabel} Range Low" : LowText;
-            DrawStringAtLineEnd(context, lowText, yLow, endX, LowPen.RenderObject.Color);
-        }
-
-        // Draw price labels if enabled
-        if (ShowPrice && ExtendLines)
-        {
-            var bounds = context.ClipBounds;
-            context.ResetClip();
-            context.SetTextRenderingHint(RenderTextRenderingHint.Aliased);
-
-            DrawPrice(context, high, HighPen.RenderObject);
-            DrawPrice(context, low, LowPen.RenderObject);
-
-            context.SetTextRenderingHint(RenderTextRenderingHint.AntiAlias);
-            context.SetClip(bounds);
-        }
+        // Extend to the right edge of the chart
+        endX = Container.Region.Right;
     }
+    else
+    {
+        // Find the end bar for this range period
+        int endBar = FindEndBarForRange(startBar);
+        endX = ChartInfo.PriceChartContainer.GetXByBar(endBar, false);
+    }
+
+    // Get Y coordinates for high and low
+    var yHigh = ChartInfo.PriceChartContainer.GetYByPrice(high, false);
+    var yLow = ChartInfo.PriceChartContainer.GetYByPrice(low, false);
+
+    // Draw area between high and low if enabled
+    if (ShowArea)
+    {
+        var startX = ChartInfo.PriceChartContainer.GetXByBar(startBar, false);
+        var rect = new Rectangle(startX, yHigh, endX - startX, yLow - yHigh);
+        context.FillRectangle(AreaColor, rect);
+    }
+
+    // Draw high line
+    context.DrawLine(HighPen.RenderObject, ChartInfo.PriceChartContainer.GetXByBar(startBar, false), yHigh, endX,
+        yHigh);
+
+    if (ShowText)
+    {
+        var highText = string.IsNullOrEmpty(HighText) ? $"{timeFrameLabel} Range High" : HighText;
+        DrawStringAtLineEnd(context, highText, yHigh, endX, HighPen.RenderObject.Color);
+    }
+
+    // Draw low line
+    context.DrawLine(LowPen.RenderObject, ChartInfo.PriceChartContainer.GetXByBar(startBar, false), yLow, endX,
+        yLow);
+
+    if (ShowText)
+    {
+        var lowText = string.IsNullOrEmpty(LowText) ? $"{timeFrameLabel} Range Low" : LowText;
+        DrawStringAtLineEnd(context, lowText, yLow, endX, LowPen.RenderObject.Color);
+    }
+
+    // Draw price labels if enabled
+    if (ShowPrice && ExtendLines)
+    {
+        var bounds = context.ClipBounds;
+        context.ResetClip();
+        context.SetTextRenderingHint(RenderTextRenderingHint.Aliased);
+
+        DrawPrice(context, high, HighPen.RenderObject);
+        DrawPrice(context, low, LowPen.RenderObject);
+
+        context.SetTextRenderingHint(RenderTextRenderingHint.AntiAlias);
+        context.SetClip(bounds);
+    }
+}
 
     private void DrawString(RenderContext context, string renderText, int yPrice, Color color)
     {
