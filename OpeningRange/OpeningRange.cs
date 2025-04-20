@@ -54,6 +54,11 @@ public class OpeningRange : Indicator
 
     private bool _rangeFormed = false;
 
+    private int _lastHighAlertBar = -1;
+    private int _lastLowAlertBar = -1;
+    private bool _highAlertTriggeredForRange = false;
+    private bool _lowAlertTriggeredForRange = false;
+
     // Dictionary to store historical ranges
     private readonly System.Collections.Generic.Dictionary<DateTime, (decimal high, decimal low, int highBar, int lowBar, int startBar, int endBar)> _historicalRanges =
         new System.Collections.Generic.Dictionary<DateTime, (decimal high, decimal low, int highBar, int lowBar, int startBar, int endBar)>();
@@ -118,10 +123,10 @@ public class OpeningRange : Indicator
     public bool ShowPrice { get; set; } = true;
 
     [Display(Name = "Extend Lines", GroupName = "Display", Order = 75)]
-    public bool ExtendLines { get; set; } = false;
+    public bool ExtendLines { get; set; }
 
     [Display(Name = "Show Area", GroupName = "Display", Order = 76)]
-    public bool ShowArea { get; set; } = false;
+    public bool ShowArea { get; set; }
 
     [Display(Name = "Area Color", GroupName = "Display", Order = 77)]
     public Color AreaColor { get; set; } = Color.FromArgb(80, Color.Blue);
@@ -160,6 +165,25 @@ public class OpeningRange : Indicator
     [Display(Name = "Size", GroupName = "Formation", Order = 150)]
     [Range(1, 20)]
     public int FormationMarkerSize { get; set; } = 8;
+
+    [Display(Name = "High Line Alert", GroupName = "Alerts", Order = 200)]
+    public bool UseHighAlert { get; set; }
+
+    [Display(Name = "Low Line Alert", GroupName = "Alerts", Order = 210)]
+    public bool UseLowAlert { get; set; }
+
+    [Display(Name = "Once Per Range", GroupName = "Alerts", Order = 220)]
+    public bool OncePerRange { get; set; }
+
+    [Display(Name = "Alert File", GroupName = "Alerts", Order = 230)]
+    public string AlertFile { get; set; } = "alert1";
+
+    [Display(Name = "Font Color", GroupName = "Alerts", Order = 240)]
+    public System.Windows.Media.Color AlertForeColor { get; set; } = System.Windows.Media.Color.FromArgb(255, 247, 249, 249);
+
+    [Display(Name = "Background", GroupName = "Alerts", Order = 250)]
+    public System.Windows.Media.Color AlertBGColor { get; set; } = System.Windows.Media.Color.FromArgb(255, 75, 72, 72);
+
 
     #endregion
 
@@ -228,9 +252,10 @@ public class OpeningRange : Indicator
             }
 
             // For debugging: at the last bar, you could add some diagnostic output
-            if (isLastBar)
+            if (isLastBar && _rangeFormed)
             {
-                // Optional: You could log the current range status here
+                // Check for alerts only if the range has formed
+                CheckForAlerts(bar, candle);
             }
         }
         catch (Exception e)
@@ -282,7 +307,19 @@ public class OpeningRange : Indicator
         _currentRangeEndBar = -1;
         _rangeFormed = false;
         _historicalRanges.Clear();
+
+        _lastHighAlertBar = -1;
+        _lastLowAlertBar = -1;
+        _highAlertTriggeredForRange = false;
+        _lowAlertTriggeredForRange = false;
     }
+
+    private void ResetAlertTracking()
+    {
+        _highAlertTriggeredForRange = false;
+        _lowAlertTriggeredForRange = false;
+    }
+
 
     private void InitializeCalculation()
     {
@@ -363,6 +400,8 @@ public class OpeningRange : Indicator
         _currentLowBar = bar;
         _currentRangeDate = candle.Time.Date;
         _rangeFormed = false;
+
+        ResetAlertTracking();
     }
 
     private int FindEndBarForRange(int startBar)
@@ -534,6 +573,48 @@ public class OpeningRange : Indicator
             };
 
             _formationMarkersDataSeries[lowBar].Add(lowValue);
+        }
+    }
+
+    private void CheckForAlerts(int bar, IndicatorCandle candle)
+    {
+        if (bar <= 0)
+            return;
+
+        var prevCandle = GetCandle(bar - 1);
+
+        // Check for high level crossing
+        if (UseHighAlert &&
+            (!OncePerRange || !_highAlertTriggeredForRange) &&
+            _lastHighAlertBar != bar)
+        {
+            if ((candle.Close >= _currentHigh && prevCandle.Close <= _currentHigh) ||
+                (candle.Close <= _currentHigh && prevCandle.Close >= _currentHigh))
+            {
+                AddAlert(AlertFile, InstrumentInfo.Instrument,
+                    $"Opening Range High crossed: {_currentHigh}",
+                    AlertBGColor, AlertForeColor);
+
+                _lastHighAlertBar = bar;
+                _highAlertTriggeredForRange = true;
+            }
+        }
+
+        // Check for low level crossing
+        if (UseLowAlert &&
+            (!OncePerRange || !_lowAlertTriggeredForRange) &&
+            _lastLowAlertBar != bar)
+        {
+            if ((candle.Close <= _currentLow && prevCandle.Close >= _currentLow) ||
+                (candle.Close >= _currentLow && prevCandle.Close <= _currentLow))
+            {
+                AddAlert(AlertFile, InstrumentInfo.Instrument,
+                    $"Opening Range Low crossed: {_currentLow}",
+                    AlertBGColor, AlertForeColor);
+
+                _lastLowAlertBar = bar;
+                _lowAlertTriggeredForRange = true;
+            }
         }
     }
 
