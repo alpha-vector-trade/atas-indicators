@@ -629,7 +629,7 @@ public class DailyLinesExtended : Indicator
     public int ApproximationTicks { get; set; } = 3;
 
     [Display(ResourceType = typeof(Resources), Name = "OmitConsecutiveAlerts", GroupName = "Alerts", Order = 386)]
-    public bool OmitConsecutiveAlerts { get; set; } = false;
+    public bool OmitConsecutiveAlerts { get; set; } = true;
 
     // Alerts
     [Display(ResourceType = typeof(Resources), Name = "AlertFile", GroupName = "Alerts", Order = 400)]

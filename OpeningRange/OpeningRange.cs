@@ -175,6 +175,10 @@ public class OpeningRange : Indicator
     [Display(Name = "Once Per Range", GroupName = "Alerts", Order = 220)]
     public bool OncePerRange { get; set; }
 
+    [Display(Name = "Omit Consecutive Alerts", GroupName = "Alerts", Order = 225)]
+    public bool OmitConsecutiveAlerts { get; set; } = true;
+
+
     [Display(Name = "Alert File", GroupName = "Alerts", Order = 230)]
     public string AlertFile { get; set; } = "alert1";
 
@@ -308,18 +312,16 @@ public class OpeningRange : Indicator
         _rangeFormed = false;
         _historicalRanges.Clear();
 
+        ResetAlertTracking();
+    }
+
+    private void ResetAlertTracking()
+    {
         _lastHighAlertBar = -1;
         _lastLowAlertBar = -1;
         _highAlertTriggeredForRange = false;
         _lowAlertTriggeredForRange = false;
     }
-
-    private void ResetAlertTracking()
-    {
-        _highAlertTriggeredForRange = false;
-        _lowAlertTriggeredForRange = false;
-    }
-
 
     private void InitializeCalculation()
     {
@@ -390,7 +392,6 @@ public class OpeningRange : Indicator
         }
     }
 
-
     private void StartNewRange(int bar, IndicatorCandle candle)
     {
         _currentRangeStartBar = bar;
@@ -438,70 +439,70 @@ public class OpeningRange : Indicator
     }
 
     private void DrawRangeLines(RenderContext context, decimal high, decimal low, int highBar, int lowBar, int startBar)
-{
-    var timeFrameLabel = _timeFrame == TimeFrameType.Weekly ? "Weekly" : "Daily";
-
-    // Determine the end X position for the lines
-    int endX;
-
-    if (ExtendLines)
     {
-        // Extend to the right edge of the chart
-        endX = Container.Region.Right;
+        var timeFrameLabel = _timeFrame == TimeFrameType.Weekly ? "Weekly" : "Daily";
+
+        // Determine the end X position for the lines
+        int endX;
+
+        if (ExtendLines)
+        {
+            // Extend to the right edge of the chart
+            endX = Container.Region.Right;
+        }
+        else
+        {
+            // Find the end bar for this range period
+            int endBar = FindEndBarForRange(startBar);
+            endX = ChartInfo.PriceChartContainer.GetXByBar(endBar, false);
+        }
+
+        // Get Y coordinates for high and low
+        var yHigh = ChartInfo.PriceChartContainer.GetYByPrice(high, false);
+        var yLow = ChartInfo.PriceChartContainer.GetYByPrice(low, false);
+
+        // Draw area between high and low if enabled
+        if (ShowArea)
+        {
+            var startX = ChartInfo.PriceChartContainer.GetXByBar(startBar, false);
+            var rect = new Rectangle(startX, yHigh, endX - startX, yLow - yHigh);
+            context.FillRectangle(AreaColor, rect);
+        }
+
+        // Draw high line
+        context.DrawLine(HighPen.RenderObject, ChartInfo.PriceChartContainer.GetXByBar(startBar, false), yHigh, endX,
+            yHigh);
+
+        if (ShowText)
+        {
+            var highText = string.IsNullOrEmpty(HighText) ? $"{timeFrameLabel} Range High" : HighText;
+            DrawStringAtLineEnd(context, highText, yHigh, endX, HighPen.RenderObject.Color);
+        }
+
+        // Draw low line
+        context.DrawLine(LowPen.RenderObject, ChartInfo.PriceChartContainer.GetXByBar(startBar, false), yLow, endX,
+            yLow);
+
+        if (ShowText)
+        {
+            var lowText = string.IsNullOrEmpty(LowText) ? $"{timeFrameLabel} Range Low" : LowText;
+            DrawStringAtLineEnd(context, lowText, yLow, endX, LowPen.RenderObject.Color);
+        }
+
+        // Draw price labels if enabled
+        if (ShowPrice && ExtendLines)
+        {
+            var bounds = context.ClipBounds;
+            context.ResetClip();
+            context.SetTextRenderingHint(RenderTextRenderingHint.Aliased);
+
+            DrawPrice(context, high, HighPen.RenderObject);
+            DrawPrice(context, low, LowPen.RenderObject);
+
+            context.SetTextRenderingHint(RenderTextRenderingHint.AntiAlias);
+            context.SetClip(bounds);
+        }
     }
-    else
-    {
-        // Find the end bar for this range period
-        int endBar = FindEndBarForRange(startBar);
-        endX = ChartInfo.PriceChartContainer.GetXByBar(endBar, false);
-    }
-
-    // Get Y coordinates for high and low
-    var yHigh = ChartInfo.PriceChartContainer.GetYByPrice(high, false);
-    var yLow = ChartInfo.PriceChartContainer.GetYByPrice(low, false);
-
-    // Draw area between high and low if enabled
-    if (ShowArea)
-    {
-        var startX = ChartInfo.PriceChartContainer.GetXByBar(startBar, false);
-        var rect = new Rectangle(startX, yHigh, endX - startX, yLow - yHigh);
-        context.FillRectangle(AreaColor, rect);
-    }
-
-    // Draw high line
-    context.DrawLine(HighPen.RenderObject, ChartInfo.PriceChartContainer.GetXByBar(startBar, false), yHigh, endX,
-        yHigh);
-
-    if (ShowText)
-    {
-        var highText = string.IsNullOrEmpty(HighText) ? $"{timeFrameLabel} Range High" : HighText;
-        DrawStringAtLineEnd(context, highText, yHigh, endX, HighPen.RenderObject.Color);
-    }
-
-    // Draw low line
-    context.DrawLine(LowPen.RenderObject, ChartInfo.PriceChartContainer.GetXByBar(startBar, false), yLow, endX,
-        yLow);
-
-    if (ShowText)
-    {
-        var lowText = string.IsNullOrEmpty(LowText) ? $"{timeFrameLabel} Range Low" : LowText;
-        DrawStringAtLineEnd(context, lowText, yLow, endX, LowPen.RenderObject.Color);
-    }
-
-    // Draw price labels if enabled
-    if (ShowPrice && ExtendLines)
-    {
-        var bounds = context.ClipBounds;
-        context.ResetClip();
-        context.SetTextRenderingHint(RenderTextRenderingHint.Aliased);
-
-        DrawPrice(context, high, HighPen.RenderObject);
-        DrawPrice(context, low, LowPen.RenderObject);
-
-        context.SetTextRenderingHint(RenderTextRenderingHint.AntiAlias);
-        context.SetClip(bounds);
-    }
-}
 
     private void DrawString(RenderContext context, string renderText, int yPrice, Color color)
     {
@@ -591,9 +592,12 @@ public class OpeningRange : Indicator
             if ((candle.Close >= _currentHigh && prevCandle.Close <= _currentHigh) ||
                 (candle.Close <= _currentHigh && prevCandle.Close >= _currentHigh))
             {
-                AddAlert(AlertFile, InstrumentInfo.Instrument,
-                    $"Opening Range High crossed: {_currentHigh}",
-                    AlertBGColor, AlertForeColor);
+                if (OmitConsecutiveAlerts && _lastHighAlertBar < bar - 1)
+                {
+                    AddAlert(AlertFile, InstrumentInfo.Instrument,
+                        $"Opening Range High crossed: {_currentHigh}",
+                        AlertBGColor, AlertForeColor);
+                }
 
                 _lastHighAlertBar = bar;
                 _highAlertTriggeredForRange = true;
@@ -608,9 +612,12 @@ public class OpeningRange : Indicator
             if ((candle.Close <= _currentLow && prevCandle.Close >= _currentLow) ||
                 (candle.Close >= _currentLow && prevCandle.Close <= _currentLow))
             {
-                AddAlert(AlertFile, InstrumentInfo.Instrument,
-                    $"Opening Range Low crossed: {_currentLow}",
-                    AlertBGColor, AlertForeColor);
+                if (OmitConsecutiveAlerts && _lastLowAlertBar < bar - 1)
+                {
+                    AddAlert(AlertFile, InstrumentInfo.Instrument,
+                        $"Opening Range Low crossed: {_currentLow}",
+                        AlertBGColor, AlertForeColor);
+                }
 
                 _lastLowAlertBar = bar;
                 _lowAlertTriggeredForRange = true;
