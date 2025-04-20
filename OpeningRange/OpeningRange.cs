@@ -57,6 +57,7 @@ public class OpeningRange : Indicator
     // Dictionary to store historical ranges
     private readonly System.Collections.Generic.Dictionary<DateTime, (decimal high, decimal low, int highBar, int lowBar, int startBar, int endBar)> _historicalRanges =
         new System.Collections.Generic.Dictionary<DateTime, (decimal high, decimal low, int highBar, int lowBar, int startBar, int endBar)>();
+    private readonly PriceSelectionDataSeries _formationMarkersDataSeries = new("FormationMarkers");
 
     #endregion
 
@@ -94,17 +95,6 @@ public class OpeningRange : Indicator
         set
         {
             _showHistoricalRanges = value;
-            RecalculateValues();
-        }
-    }
-
-    [Display(Name = "Render Only After Formation", GroupName = "Display", Order = 40)]
-    public bool RenderOnlyAfterFormation
-    {
-        get => _renderOnlyAfterFormation;
-        set
-        {
-            _renderOnlyAfterFormation = value;
             RecalculateValues();
         }
     }
@@ -148,6 +138,29 @@ public class OpeningRange : Indicator
     [Display(Name = "Low Text", GroupName = "Low Range", Order = 110)]
     public string LowText { get; set; } = "Range Low";
 
+    [Description("Hide lines and area during formation of the range")]
+    [Display(Name = "Render only after formation", GroupName = "Formation", Order = 120)]
+    public bool RenderOnlyAfterFormation
+    {
+        get => _renderOnlyAfterFormation;
+        set
+        {
+            _renderOnlyAfterFormation = value;
+            RecalculateValues();
+        }
+    }
+
+    [Description("Display markers at the high and low during formation of the range")]
+    [Display(Name = "Display Markers", GroupName = "Formation", Order = 130)]
+    public bool ShowFormationMarkers { get; set; } = true;
+
+    [Display(Name = "Type", GroupName = "Formation", Order = 140)]
+    public ObjectType FormationMarkerType { get; set; } = ObjectType.Diamond;
+
+    [Display(Name = "Size", GroupName = "Formation", Order = 150)]
+    [Range(1, 20)]
+    public int FormationMarkerSize { get; set; } = 8;
+
     #endregion
 
     #region ctor
@@ -159,8 +172,8 @@ public class OpeningRange : Indicator
         EnableCustomDrawing = true;
         SubscribeToDrawingEvents(DrawingLayouts.Final);
 
-        DataSeries[0].IsHidden = true;
-        ((ValueDataSeries)DataSeries[0]).VisualType = VisualMode.Hide;
+        _formationMarkersDataSeries.IsHidden = true;
+        DataSeries[0] = _formationMarkersDataSeries;
 
         DailyMinutes.Enabled = _timeFrame == TimeFrameType.Daily;
     }
@@ -209,6 +222,8 @@ public class OpeningRange : Indicator
                     // Mark the range as formed once we exit the formation period
                     _rangeFormed = true;
                     _currentRangeEndBar = bar;
+
+                    _formationMarkersDataSeries.Clear();
                 }
             }
 
@@ -233,6 +248,11 @@ public class OpeningRange : Indicator
         if (_currentRangeStartBar > 0 && (!RenderOnlyAfterFormation || _rangeFormed))
         {
             DrawRangeLines(context, _currentHigh, _currentLow, _currentHighBar, _currentLowBar, _currentRangeStartBar);
+        }
+
+        if (ShowFormationMarkers && _currentRangeStartBar > 0 && !_rangeFormed)
+        {
+            DrawFormationMarkers(context, _currentHigh, _currentLow, _currentHighBar, _currentLowBar);
         }
 
         // Draw historical ranges if enabled
@@ -478,6 +498,43 @@ public class OpeningRange : Indicator
 
         context.FillPolygon(pen.Color, polygon);
         context.DrawString(renderText, _font, Color.White, Container.Region.Right + 6, y - 6);
+    }
+
+    private void DrawFormationMarkers(RenderContext context, decimal high, decimal low, int highBar, int lowBar)
+    {
+        _formationMarkersDataSeries.Clear();
+
+        // Only draw if the bars are valid
+        if (highBar < 0 || lowBar < 0)
+            return;
+
+        // Draw high marker
+        if (highBar >= FirstVisibleBarNumber && highBar <= LastVisibleBarNumber)
+        {
+            var highValue = new PriceSelectionValue(high)
+            {
+                VisualObject = FormationMarkerType,
+                Size = FormationMarkerSize,
+                ObjectColor = HighPen.Color,
+                PriceSelectionColor = Color.Transparent.Convert()
+            };
+
+            _formationMarkersDataSeries[highBar].Add(highValue);
+        }
+
+        // Draw low marker
+        if (lowBar >= FirstVisibleBarNumber && lowBar <= LastVisibleBarNumber)
+        {
+            var lowValue = new PriceSelectionValue(low)
+            {
+                VisualObject = FormationMarkerType,
+                Size = FormationMarkerSize,
+                ObjectColor = LowPen.Color,
+                PriceSelectionColor = Color.Transparent.Convert()
+            };
+
+            _formationMarkersDataSeries[lowBar].Add(lowValue);
+        }
     }
 
     #endregion
