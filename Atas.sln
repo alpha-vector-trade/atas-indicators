@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatiosExtended", "RatiosExt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpeningRange", "OpeningRange\OpeningRange.csproj", "{B59B5F61-CB2F-477C-9123-CAA59EBAE074}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeFrameMarker", "TimeFrameMarker\TimeFrameMarker.csproj", "{2E0BFD90-231D-4B5A-9603-4E4FDF5ECEDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B59B5F61-CB2F-477C-9123-CAA59EBAE074}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B59B5F61-CB2F-477C-9123-CAA59EBAE074}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B59B5F61-CB2F-477C-9123-CAA59EBAE074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E0BFD90-231D-4B5A-9603-4E4FDF5ECEDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E0BFD90-231D-4B5A-9603-4E4FDF5ECEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E0BFD90-231D-4B5A-9603-4E4FDF5ECEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E0BFD90-231D-4B5A-9603-4E4FDF5ECEDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
