@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeFrameMarker", "TimeFram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedResources", "SharedResources\SharedResources.csproj", "{86128621-B741-432F-89C0-9B48362316F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartingHotkeys", "ChartingHotkeys\ChartingHotkeys.csproj", "{3A9F6B97-54EF-4162-B2B4-F282750B668C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{86128621-B741-432F-89C0-9B48362316F2}.Release|x64.Build.0 = Release|Any CPU
 		{86128621-B741-432F-89C0-9B48362316F2}.Release|x86.ActiveCfg = Release|Any CPU
 		{86128621-B741-432F-89C0-9B48362316F2}.Release|x86.Build.0 = Release|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Debug|x64.Build.0 = Debug|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Debug|x86.Build.0 = Debug|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Release|x64.ActiveCfg = Release|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Release|x64.Build.0 = Release|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Release|x86.ActiveCfg = Release|Any CPU
+		{3A9F6B97-54EF-4162-B2B4-F282750B668C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
