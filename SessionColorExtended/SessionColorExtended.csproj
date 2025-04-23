@@ -4,7 +4,11 @@
 		<TargetFramework>net8.0-windows7.0</TargetFramework>
 		<RootNamespace>ATAS.Indicators.Technical</RootNamespace>
 		<AssemblyName>ATAS.Indicators.SessionColor.Extended</AssemblyName>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<AssemblyTitle>Session Color Extended</AssemblyTitle>
+		<Product>ATAS Indicators</Product>
+		<Description>Extends the standard Session Colors with more drawing options</Description>
+		<PackageId>VhCapital.ATAS.Indicators.SessionColorExtended</PackageId>
 		<LangVersion>latest</LangVersion>
 		<UseWPF>true</UseWPF>
 		<OutputType>Library</OutputType>
@@ -18,6 +22,10 @@
 
 	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\SharedResources\SharedResources.csproj"/>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="morelinq" Version="4.3.0" />

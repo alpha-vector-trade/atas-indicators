@@ -4,7 +4,11 @@
         <TargetFramework>net8.0-windows7.0</TargetFramework>
         <RootNamespace>ATAS.Indicators.Technical</RootNamespace>
         <AssemblyName>ATAS.Indicators.OpeningRange</AssemblyName>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <AssemblyTitle>Opening Range</AssemblyTitle>
+        <Product>ATAS Indicators</Product>
+        <Description>Displays a user configurable opening range</Description>
+        <PackageId>VhCapital.ATAS.Indicators.OpeningRange</PackageId>
         <LangVersion>latest</LangVersion>
         <UseWPF>true</UseWPF>
         <OutputType>Library</OutputType>

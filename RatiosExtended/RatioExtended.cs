@@ -7,7 +7,7 @@
     using System.Windows.Media;
 
     using ATAS.Indicators.Drawing;
-    using ATAS.Indicators.Technical.Properties;
+    using SharedResources.Properties;
 
     using OFT.Attributes;
 

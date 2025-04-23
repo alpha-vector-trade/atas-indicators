@@ -4,7 +4,11 @@
         <TargetFramework>net8.0-windows7.0</TargetFramework>
         <RootNamespace>ATAS.Indicators.Technical</RootNamespace>
         <AssemblyName>ATAS.Indicators.TimeFrameMarker</AssemblyName>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <AssemblyTitle>Timeframe Marker</AssemblyTitle>
+        <Product>ATAS Indicators</Product>
+        <Description>Display a configurable vertical line at the start of daily, weekly or monthly sessions</Description>
+        <PackageId>VhCapital.ATAS.Indicators.TimeFrameMarker</PackageId>
         <LangVersion>latest</LangVersion>
         <UseWPF>true</UseWPF>
         <OutputType>Library</OutputType>
