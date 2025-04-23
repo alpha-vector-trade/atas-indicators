@@ -1,10 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0-windows7.0</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <RootNamespace>SharedResources</RootNamespace>
         <UseWPF>true</UseWPF>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <AssemblyTitle>Share Resources</AssemblyTitle>
+        <Product>ATAS Indicators</Product>
+        <Description>Shared Resources for the solution</Description>
+        <PackageId>VhCapital.ATAS.Indicators.SharedResources</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
