@@ -155,9 +155,6 @@ using Utils.Common.Logging;
             if (!modifier1Pressed || !modifier2Pressed)
                 return false;
 
-            // Isolate the key without modifiers
-            Key keyPressed = e.Key;
-
             // Apply the appropriate layout based on the key pressed
             switch (e.Key)
             {
