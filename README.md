@@ -65,6 +65,8 @@ If ATAS was already running during compilation:
 Find the the icon with the three little blue stripes in the bottom right corner of the ATAS main window. Click on it
 and the indicators should reload automatically.
 
+![indicator-reload.png](.readme/indicator-reload.png)
+
 ## Troubleshooting
 If indicators don't appear in ATAS after building:
 

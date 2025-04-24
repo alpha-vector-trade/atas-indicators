@@ -15,9 +15,9 @@ using ATAS.Indicators;
 using Color = System.Drawing.Color;
 
 [Obfuscation(Feature = "renaming", ApplyToMembers = true, Exclude = true)]
-[HelpLink("https://support.atas.net/knowledge-bases/2/articles/3602-session-color")]
 [DisplayName("Session Color Extended")]
 [Category("AlphaVector")]
+[HelpLink("https://github.com/alpha-vector-trade/atas-indicators")]
 public class SessionColorExtended : Indicator
 {
     #region Nested types

@@ -14,6 +14,7 @@
 
     [DisplayName("Ratio Extended")]
     [Category("AlphaVector")]
+    [HelpLink("https://github.com/alpha-vector-trade/atas-indicators")]
     public class RatioExtended : Indicator
     {
         #region Nested types

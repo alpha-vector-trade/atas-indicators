@@ -11,6 +11,7 @@ using System.Windows.Input;
 
 [DisplayName("Charting Hotkeys")]
 [Category("AlphaVector")]
+[HelpLink("https://github.com/alpha-vector-trade/atas-indicators")]
 public class ChartingHotkeys : Indicator
 {
     #region Fields

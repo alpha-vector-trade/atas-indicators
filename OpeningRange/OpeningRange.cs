@@ -19,6 +19,7 @@ using Color = System.Drawing.Color;
 
 [DisplayName("Opening Range")]
 [Category("AlphaVector")]
+[HelpLink("https://github.com/alpha-vector-trade/atas-indicators")]
 public class OpeningRange : Indicator
 {
     #region Nested types

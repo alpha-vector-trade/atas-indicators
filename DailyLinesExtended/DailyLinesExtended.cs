@@ -24,6 +24,7 @@ using Color = System.Drawing.Color;
 
 [DisplayName("Daily Lines Extended")]
 [Category("AlphaVector")]
+[HelpLink("https://github.com/alpha-vector-trade/atas-indicators")]
 public class DailyLinesExtended : Indicator
 {
     #region Nested types
