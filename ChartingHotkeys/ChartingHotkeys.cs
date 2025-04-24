@@ -187,6 +187,9 @@ public class ChartingHotkeys : Indicator
             case var key when key == LayoutCycleDownHotkey:
                 CycleLayoutDown();
                 break;
+
+            default:
+                return false;
         }
 
         return true;
