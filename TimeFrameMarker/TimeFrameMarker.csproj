@@ -13,6 +13,7 @@
         <UseWPF>true</UseWPF>
         <OutputType>Library</OutputType>
         <AtasIndicatorsDir>$(USERPROFILE)\Documents\ATAS\Indicators</AtasIndicatorsDir>
+        <AtasPlatformDir>C:\Program Files (x86)\ATAS Platform</AtasPlatformDir>
     </PropertyGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
@@ -32,22 +33,22 @@
 
     <ItemGroup>
         <Reference Include="ATAS.DataFeedsCore">
-            <HintPath>C:\Program Files (x86)\ATAS Platform\ATAS.DataFeedsCore.dll</HintPath>
+            <HintPath>$(AtasPlatformDir)\ATAS.DataFeedsCore.dll</HintPath>
         </Reference>
         <Reference Include="ATAS.Indicators">
-            <HintPath>C:\Program Files (x86)\ATAS Platform\ATAS.Indicators.dll</HintPath>
+            <HintPath>$(AtasPlatformDir)\ATAS.Indicators.dll</HintPath>
         </Reference>
         <Reference Include="OFT.Attributes">
-            <HintPath>C:\Program Files (x86)\ATAS Platform\OFT.Attributes.dll</HintPath>
+            <HintPath>$(AtasPlatformDir)\OFT.Attributes.dll</HintPath>
         </Reference>
         <Reference Include="OFT.Localization">
-            <HintPath>C:\Program Files (x86)\ATAS Platform\OFT.Localization.dll</HintPath>
+            <HintPath>$(AtasPlatformDir)\OFT.Localization.dll</HintPath>
         </Reference>
         <Reference Include="OFT.Rendering">
-            <HintPath>C:\Program Files (x86)\ATAS Platform\OFT.Rendering.dll</HintPath>
+            <HintPath>$(AtasPlatformDir)\OFT.Rendering.dll</HintPath>
         </Reference>
         <Reference Include="Utils.Common">
-            <HintPath>C:\Program Files (x86)\ATAS Platform\Utils.Common.dll</HintPath>
+            <HintPath>$(AtasPlatformDir)\Utils.Common.dll</HintPath>
         </Reference>
     </ItemGroup>
 
