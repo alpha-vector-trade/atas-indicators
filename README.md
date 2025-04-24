@@ -65,15 +65,16 @@ If ATAS was already running during compilation:
 Find the the icon with the three little blue stripes in the bottom right corner of the ATAS main window. Click on it
 and the indicators should reload automatically.
 
-![indicator-reload.png](.readme/indicator-reload.png)
+![indicator-reload.png](SharedResources/Images/indicator-reload.png)
 
 ## Troubleshooting
 If indicators don't appear in ATAS after building:
 
-Ensure you have proper write permissions to the ATAS Indicators folder
-Verify the post-build events executed successfully (check Output window in Visual Studio)
-Make sure the indicator DLLs are actually in your ATAS Indicators folder
+- Ensure you have proper write permissions to the ATAS Indicators folder
+- Verify the post-build events executed successfully (check Output window in Visual Studio)
+- Make sure the indicator DLLs are actually in your ATAS Indicators folder 
+
 If you get dependency errors:
 
-Ensure your ATAS Platform installation path is correctly set in the project files
-Check if all required ATAS DLLs are available in the referenced path
+- Ensure your ATAS Platform installation path is correctly set in the project files
+- Check if all required ATAS DLLs are available in the referenced path
