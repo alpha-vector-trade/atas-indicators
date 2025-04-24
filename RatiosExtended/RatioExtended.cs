@@ -1,4 +1,4 @@
-﻿namespace ATAS.Indicators.Technical
+﻿namespace ATAS.Indicators.AlphaVector
 {
     using System;
     using System.ComponentModel;
@@ -6,13 +6,14 @@
     using System.Linq;
     using System.Windows.Media;
 
+    using ATAS.Indicators;
     using ATAS.Indicators.Drawing;
     using SharedResources.Properties;
 
     using OFT.Attributes;
 
-    [HelpLink("https://support.atas.net/knowledge-bases/2/articles/19579-ratio")]
     [DisplayName("Ratio Extended")]
+    [Category("AlphaVector")]
     public class RatioExtended : Indicator
     {
         #region Nested types

@@ -5,10 +5,10 @@
         <RootNamespace>SharedResources</RootNamespace>
         <UseWPF>true</UseWPF>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-        <AssemblyTitle>Share Resources</AssemblyTitle>
-        <Product>ATAS Indicators</Product>
+        <AssemblyTitle>Shared Resources</AssemblyTitle>
+        <Product>AlphaVector ATAS Indicators</Product>
         <Description>Shared Resources for the solution</Description>
-        <PackageId>VhCapital.ATAS.Indicators.SharedResources</PackageId>
+        <PackageId>AlphaVector.ATAS.Indicators.SharedResources</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

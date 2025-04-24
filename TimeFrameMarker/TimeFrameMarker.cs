@@ -1,4 +1,4 @@
-﻿namespace ATAS.Indicators.Technical;
+﻿namespace ATAS.Indicators.AlphaVector;
 
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,7 @@ using Utils.Common.Logging;
 using Color = System.Drawing.Color;
 
 [DisplayName("Timeframe Marker")]
+[Category("AlphaVector")]
 public class TimeFrameMarker : Indicator
 {
     public enum PeriodType

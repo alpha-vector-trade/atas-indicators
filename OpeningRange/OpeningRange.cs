@@ -1,4 +1,4 @@
-﻿namespace ATAS.Indicators.Technical;
+﻿namespace ATAS.Indicators.AlphaVector;
 
 using System;
 using System.ComponentModel;
@@ -12,11 +12,13 @@ using OFT.Rendering.Settings;
 using OFT.Rendering.Tools;
 using Utils.Common.Logging;
 
+using ATAS.Indicators;
 using ATAS.Indicators.Drawing;
 
 using Color = System.Drawing.Color;
 
 [DisplayName("Opening Range")]
+[Category("AlphaVector")]
 public class OpeningRange : Indicator
 {
     #region Nested types

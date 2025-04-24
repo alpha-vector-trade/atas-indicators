@@ -2,13 +2,13 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
-		<RootNamespace>ATAS.Indicators.Technical</RootNamespace>
+		<RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
 		<AssemblyName>ATAS.Indicators.SessionColor.Extended</AssemblyName>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<AssemblyTitle>Session Color Extended</AssemblyTitle>
-		<Product>ATAS Indicators</Product>
+		<Product>AlphaVector ATAS Indicators</Product>
 		<Description>Extends the standard Session Colors with more drawing options</Description>
-		<PackageId>VhCapital.ATAS.Indicators.SessionColorExtended</PackageId>
+		<PackageId>AlphaVector.ATAS.Indicators.SessionColorExtended</PackageId>
 		<LangVersion>latest</LangVersion>
 		<UseWPF>true</UseWPF>
 		<OutputType>Library</OutputType>

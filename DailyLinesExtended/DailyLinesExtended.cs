@@ -1,4 +1,4 @@
-﻿namespace ATAS.Indicators.Technical;
+﻿namespace ATAS.Indicators.AlphaVector;
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows.Media;
 
+using ATAS.Indicators;
 using ATAS.Indicators.Drawing;
 using SharedResources.Properties;
 
@@ -22,7 +23,7 @@ using Utils.Common.Logging;
 using Color = System.Drawing.Color;
 
 [DisplayName("Daily Lines Extended")]
-[HelpLink("https://support.atas.net/knowledge-bases/2/articles/17029-daily-lines")]
+[Category("AlphaVector")]
 public class DailyLinesExtended : Indicator
 {
     #region Nested types
