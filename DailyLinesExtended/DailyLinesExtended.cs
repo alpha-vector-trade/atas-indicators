@@ -550,6 +550,17 @@ public class DailyLinesExtended : Indicator
         }
     }
 
+    [Display(ResourceType = typeof(Resources), Name = "ShowAboveChart", GroupName = "Drawing", Order = 3310)]
+    public bool ShowAboveChart
+    {
+	    get => DrawAbovePrice;
+	    set
+	    {
+		    DrawAbovePrice = value;
+		    RedrawChart();
+	    }
+    }
+
     // Open
     [Display(ResourceType = typeof(Resources), Name = "Line", GroupName = "Open", Order = 310)]
     public PenSettings OpenPen { get; set; } = new() { Color = DefaultColors.Red.Convert(), Width = 2 };
@@ -652,10 +663,12 @@ public class DailyLinesExtended : Indicator
     {
         DenyToChangePanel = true;
         EnableCustomDrawing = true;
-        SubscribeToDrawingEvents(DrawingLayouts.Final);
+        SubscribeToDrawingEvents(DrawingLayouts.LatestBar);
 
         DataSeries[0].IsHidden = true;
         ((ValueDataSeries)DataSeries[0]).VisualType = VisualMode.Hide;
+
+        DrawAbovePrice = ShowAboveChart;
 
         bool isPreviousPeriod = _per is PeriodType.PreviousDay or PeriodType.PreviousWeek or PeriodType.PreviousMonth;
         UseOpenAlert.Enabled = UseCloseAlert.Enabled = UseHighAlert.Enabled = UseLowAlert.Enabled =

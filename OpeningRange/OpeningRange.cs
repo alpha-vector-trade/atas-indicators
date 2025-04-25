@@ -96,18 +96,7 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Show Historical Ranges", GroupName = "Display", Order = 30)]
-    public bool ShowHistoricalRanges
-    {
-        get => _showHistoricalRanges;
-        set
-        {
-            _showHistoricalRanges = value;
-            RecalculateValues();
-        }
-    }
-
-    [Display(Name = "Days Look Back", GroupName = "General", Order = 50)]
+    [Display(Name = "Days Look Back", GroupName = "General", Order = 30)]
     [Range(1, 1000)]
     public int LookBackDays
     {
@@ -119,20 +108,42 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Show Text", GroupName = "Display", Order = 60)]
+    [Display(Name = "Show Historical Ranges", GroupName = "Drawing", Order = 40)]
+    public bool ShowHistoricalRanges
+    {
+        get => _showHistoricalRanges;
+        set
+        {
+            _showHistoricalRanges = value;
+            RecalculateValues();
+        }
+    }
+
+    [Display(Name = "Show Text", GroupName = "Drawing", Order = 60)]
     public bool ShowText { get; set; } = true;
 
-    [Display(Name = "Show Price", GroupName = "Display", Order = 70)]
+    [Display(Name = "Show Price", GroupName = "Drawing", Order = 70)]
     public bool ShowPrice { get; set; } = true;
 
-    [Display(Name = "Extend Lines", GroupName = "Display", Order = 75)]
+    [Display(Name = "Extend Lines", GroupName = "Drawing", Order = 75)]
     public bool ExtendLines { get; set; }
 
-    [Display(Name = "Show Area", GroupName = "Display", Order = 76)]
+    [Display(Name = "Show Area", GroupName = "Drawing", Order = 76)]
     public bool ShowArea { get; set; }
 
-    [Display(Name = "Area Color", GroupName = "Display", Order = 77)]
+    [Display(Name = "Area Color", GroupName = "Drawing", Order = 77)]
     public Color AreaColor { get; set; } = Color.FromArgb(80, Color.Blue);
+
+    [Display(Name = "Show Above Chart", GroupName = "Drawing", Order = 78)]
+    public bool ShowAboveChart
+    {
+        get => DrawAbovePrice;
+        set
+        {
+            DrawAbovePrice = value;
+            RedrawChart();
+        }
+    }
 
     [Display(Name = "High Line", GroupName = "High Range", Order = 80)]
     public PenSettings HighPen { get; set; } = new() { Color = DefaultColors.Green.Convert(), Width = 2 };
@@ -201,7 +212,9 @@ public class OpeningRange : Indicator
     {
         DenyToChangePanel = true;
         EnableCustomDrawing = true;
-        SubscribeToDrawingEvents(DrawingLayouts.Final);
+        SubscribeToDrawingEvents(DrawingLayouts.LatestBar);
+
+        DrawAbovePrice = ShowAboveChart;
 
         _formationMarkersDataSeries.IsHidden = true;
         DataSeries[0] = _formationMarkersDataSeries;
