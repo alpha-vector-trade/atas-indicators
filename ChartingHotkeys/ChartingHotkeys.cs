@@ -1,4 +1,7 @@
-﻿namespace ATAS.Indicators.AlphaVector;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace ATAS.Indicators.AlphaVector;
 
 using ATAS.Indicators;
 using OFT.Attributes;
@@ -39,90 +42,105 @@ public class ChartingHotkeys : Indicator
 
     #region Layout Cycle
 
-    [Display(GroupName = "Cycle Through Layouts", Name = "Cycle Up", Order = 10)]
+    [Display(GroupName = "Cycle Through Layouts", Name = "Cycle Up", Order = 40)]
     public Key LayoutCycleUpHotkey { get; set; } = Key.PageUp;
 
-    [Display(GroupName = "Cycle Through Layouts", Name = "Cycle Down", Order = 20)]
+    [Display(GroupName = "Cycle Through Layouts", Name = "Cycle Down", Order = 50)]
     public Key LayoutCycleDownHotkey { get; set; } = Key.PageDown;
 
     #endregion
 
     #region Footprint Layout 1
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Hotkey", Order = 10)]
+    [Display(GroupName = "Footprint Layout 1", Name = "Enabled", Order = 100)]
+    public bool Layout1Enabled { get; set; } = true;
+
+    [Display(GroupName = "Footprint Layout 1", Name = "Hotkey", Order = 110)]
     public Key Layout1Hotkey { get; set; } = Key.D1;
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Visual Mode", Order = 20)]
+    [Display(GroupName = "Footprint Layout 1", Name = "Visual Mode", Order = 120)]
     public FootprintVisualModes Layout1FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Content Mode", Order = 30)]
+    [Display(GroupName = "Footprint Layout 1", Name = "Content Mode", Order = 130)]
     public FootprintContentModes Layout1FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Color Scheme", Order = 40)]
+    [Display(GroupName = "Footprint Layout 1", Name = "Color Scheme", Order = 140)]
     public FootprintColorSchemes Layout1FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
 
     #region Footprint Footprint Layout 2
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Hotkey", Order = 10)]
+    [Display(GroupName = "Footprint Layout 2", Name = "Enabled", Order = 200)]
+    public bool Layout2Enabled { get; set; } = true;
+
+    [Display(GroupName = "Footprint Layout 2", Name = "Hotkey", Order = 210)]
     public Key Layout2Hotkey { get; set; } = Key.D2;
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Visual Mode", Order = 20)]
+    [Display(GroupName = "Footprint Layout 2", Name = "Visual Mode", Order = 220)]
     public FootprintVisualModes Layout2FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Content Mode", Order = 30)]
+    [Display(GroupName = "Footprint Layout 2", Name = "Content Mode", Order = 230)]
     public FootprintContentModes Layout2FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Color Scheme", Order = 40)]
+    [Display(GroupName = "Footprint Layout 2", Name = "Color Scheme", Order = 240)]
     public FootprintColorSchemes Layout2FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
 
     #region Footprint Layout 3
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Hotkey", Order = 10)]
+    [Display(GroupName = "Footprint Layout 3", Name = "Enabled", Order = 300)]
+    public bool Layout3Enabled { get; set; } = true;
+
+    [Display(GroupName = "Footprint Layout 3", Name = "Hotkey", Order = 310)]
     public Key Layout3Hotkey { get; set; } = Key.D3;
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Visual Mode", Order = 20)]
+    [Display(GroupName = "Footprint Layout 3", Name = "Visual Mode", Order = 320)]
     public FootprintVisualModes Layout3FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Content Mode", Order = 30)]
+    [Display(GroupName = "Footprint Layout 3", Name = "Content Mode", Order = 330)]
     public FootprintContentModes Layout3FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Color Scheme", Order = 40)]
+    [Display(GroupName = "Footprint Layout 3", Name = "Color Scheme", Order = 340)]
     public FootprintColorSchemes Layout3FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
 
     #region Footprint Layout 4
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Hotkey", Order = 10)]
+    [Display(GroupName = "Footprint Layout 4", Name = "Enabled", Order = 400)]
+    public bool Layout4Enabled { get; set; } = true;
+
+    [Display(GroupName = "Footprint Layout 4", Name = "Hotkey", Order = 410)]
     public Key Layout4Hotkey { get; set; } = Key.D4;
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Visual Mode", Order = 20)]
+    [Display(GroupName = "Footprint Layout 4", Name = "Visual Mode", Order = 420)]
     public FootprintVisualModes Layout4FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Content Mode", Order = 30)]
+    [Display(GroupName = "Footprint Layout 4", Name = "Content Mode", Order = 430)]
     public FootprintContentModes Layout4FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Color Scheme", Order = 40)]
+    [Display(GroupName = "Footprint Layout 4", Name = "Color Scheme", Order = 440)]
     public FootprintColorSchemes Layout4FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
 
     #region Footprint Layout 5
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Hotkey", Order = 10)]
+    [Display(GroupName = "Footprint Layout 5", Name = "Enabled", Order = 500)]
+    public bool Layout5Enabled { get; set; } = true;
+
+    [Display(GroupName = "Footprint Layout 5", Name = "Hotkey", Order = 510)]
     public Key Layout5Hotkey { get; set; } = Key.D5;
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Visual Mode", Order = 20)]
+    [Display(GroupName = "Footprint Layout 5", Name = "Visual Mode", Order = 520)]
     public FootprintVisualModes Layout5FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Content Mode", Order = 30)]
+    [Display(GroupName = "Footprint Layout 5", Name = "Content Mode", Order = 530)]
     public FootprintContentModes Layout5FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Color Scheme", Order = 40)]
+    [Display(GroupName = "Footprint Layout 5", Name = "Color Scheme", Order = 540)]
     public FootprintColorSchemes Layout5FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
@@ -133,6 +151,8 @@ public class ChartingHotkeys : Indicator
 
     public ChartingHotkeys() : base(true)
     {
+        DenyToChangePanel = true;
+
         DataSeries[0].IsHidden = true;
         SubscribeToDrawingEvents(DrawingLayouts.Final);
     }
@@ -156,27 +176,27 @@ public class ChartingHotkeys : Indicator
         // Apply the appropriate layout based on the key pressed
         switch (e.Key)
         {
-            case var key when key == Layout1Hotkey:
+            case var key when key == Layout1Hotkey && Layout1Enabled:
                 _currentLayoutNumber = 1;
                 ApplyLayout(_currentLayoutNumber);
                 break;
 
-            case var key when key == Layout2Hotkey:
+            case var key when key == Layout2Hotkey && Layout2Enabled:
                 _currentLayoutNumber = 2;
                 ApplyLayout(_currentLayoutNumber);
                 break;
 
-            case var key when key == Layout3Hotkey:
+            case var key when key == Layout3Hotkey && Layout3Enabled:
                 _currentLayoutNumber = 3;
                 ApplyLayout(_currentLayoutNumber);
                 break;
 
-            case var key when key == Layout4Hotkey:
+            case var key when key == Layout4Hotkey && Layout4Enabled:
                 _currentLayoutNumber = 4;
                 ApplyLayout(_currentLayoutNumber);
                 break;
 
-            case var key when key == Layout5Hotkey:
+            case var key when key == Layout5Hotkey && Layout4Enabled:
                 _currentLayoutNumber = 5;
                 ApplyLayout(_currentLayoutNumber);
                 break;
@@ -211,15 +231,68 @@ public class ChartingHotkeys : Indicator
 
     private void CycleLayoutUp()
     {
-        _currentLayoutNumber = (_currentLayoutNumber % MaxLayoutCount) + 1;
-        ApplyLayout(_currentLayoutNumber);
+        int nextLayout = GetNextEnabledLayout(_currentLayoutNumber);
+        if (nextLayout != -1)
+        {
+            _currentLayoutNumber = nextLayout;
+            ApplyLayout(_currentLayoutNumber);
+        }
     }
 
     private void CycleLayoutDown()
     {
-        _currentLayoutNumber = (_currentLayoutNumber > 1) ? _currentLayoutNumber - 1 : MaxLayoutCount;
-        ApplyLayout(_currentLayoutNumber);
+        int prevLayout = GetPreviousEnabledLayout(_currentLayoutNumber);
+        if (prevLayout != -1)
+        {
+            _currentLayoutNumber = prevLayout;
+            ApplyLayout(_currentLayoutNumber);
+        }
     }
+
+    private int GetNextEnabledLayout(int currentLayout)
+    {
+        // Get all enabled layouts
+        var enabledLayouts = GetEnabledLayouts();
+
+        if (enabledLayouts.Count == 0)
+            return -1;
+
+        int index = enabledLayouts.IndexOf(currentLayout);
+        if (index == -1)
+            return enabledLayouts.First();
+
+        // Get next layout or wrap around to the first
+        return enabledLayouts[(index + 1) % enabledLayouts.Count];
+    }
+
+    private int GetPreviousEnabledLayout(int currentLayout)
+    {
+        // Get all enabled layouts
+        var enabledLayouts = GetEnabledLayouts();
+        if (enabledLayouts.Count == 0)
+            return -1;
+
+        int index = enabledLayouts.IndexOf(currentLayout);
+        if (index == -1)
+            return enabledLayouts.Last();
+
+        // Get previous layout or wrap around to the last
+        return enabledLayouts[(index - 1 + enabledLayouts.Count) % enabledLayouts.Count];
+    }
+
+    private List<int> GetEnabledLayouts()
+    {
+        var enabledLayouts = new List<int>();
+
+        if (Layout1Enabled) enabledLayouts.Add(1);
+        if (Layout2Enabled) enabledLayouts.Add(2);
+        if (Layout3Enabled) enabledLayouts.Add(3);
+        if (Layout4Enabled) enabledLayouts.Add(4);
+        if (Layout5Enabled) enabledLayouts.Add(5);
+
+        return enabledLayouts;
+    }
+
 
     private void ApplyLayout(int layoutNumber)
     {
