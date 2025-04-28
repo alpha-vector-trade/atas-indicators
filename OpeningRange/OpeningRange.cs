@@ -219,14 +219,21 @@ public class OpeningRange : Indicator
     [Display(Name = "Omit Consecutive Alerts", GroupName = "Alerts", Order = 430)]
     public bool OmitConsecutiveAlerts { get; set; } = true;
 
+    [Display(Name = "Use Approximation Alerts", GroupName = "Alerts", Order = 440)]
+    public bool UseApproximationAlert { get; set; } = false;
 
-    [Display(Name = "Alert File", GroupName = "Alerts", Order = 440)]
+    [Display(Name = "Approximation Ticks", GroupName = "Alerts", Order = 450)]
+    [Range(1, 100)]
+    public int ApproximationTicks { get; set; } = 3;
+
+
+    [Display(Name = "Alert File", GroupName = "Alerts", Order = 460)]
     public string AlertFile { get; set; } = "alert1";
 
-    [Display(Name = "Font Color", GroupName = "Alerts", Order = 450)]
+    [Display(Name = "Font Color", GroupName = "Alerts", Order = 470)]
     public System.Windows.Media.Color AlertForeColor { get; set; } = System.Windows.Media.Color.FromArgb(255, 247, 249, 249);
 
-    [Display(Name = "Background", GroupName = "Alerts", Order = 460)]
+    [Display(Name = "Background", GroupName = "Alerts", Order = 480)]
     public System.Windows.Media.Color AlertBGColor { get; set; } = System.Windows.Media.Color.FromArgb(255, 75, 72, 72);
 
     #endregion
@@ -297,10 +304,9 @@ public class OpeningRange : Indicator
                 }
             }
 
-            // For debugging: at the last bar, you could add some diagnostic output
+            // Check for alerts only if the range has formed
             if (isLastBar && _rangeFormed)
             {
-                // Check for alerts only if the range has formed
                 CheckForAlerts(bar, candle);
             }
         }
@@ -626,46 +632,59 @@ public class OpeningRange : Indicator
 
         var prevCandle = GetCandle(bar - 1);
 
-        // Check for high level crossing
-        if (UseHighAlert &&
-            (!OncePerRange || !_highAlertTriggeredForRange) &&
-            _lastHighAlertBar != bar)
-        {
-            if ((candle.Close >= _currentHigh && prevCandle.Close <= _currentHigh) ||
-                (candle.Close <= _currentHigh && prevCandle.Close >= _currentHigh))
-            {
-                if (OmitConsecutiveAlerts && _lastHighAlertBar < bar - 1)
-                {
-                    AddAlert(AlertFile, InstrumentInfo.Instrument,
-                        $"Opening Range High crossed: {_currentHigh}",
-                        AlertBGColor, AlertForeColor);
-                }
+        // Check for high and low level crossings
+        CheckLevelCrossing(bar, candle, prevCandle, _currentHigh, ref _lastHighAlertBar,
+            ref _highAlertTriggeredForRange, UseHighAlert, "Opening Range High");
 
-                _lastHighAlertBar = bar;
-                _highAlertTriggeredForRange = true;
+        CheckLevelCrossing(bar, candle, prevCandle, _currentLow, ref _lastLowAlertBar,
+            ref _lowAlertTriggeredForRange, UseLowAlert, "Opening Range Low");
+    }
+
+    private void CheckLevelCrossing(int bar, IndicatorCandle candle, IndicatorCandle prevCandle,
+        decimal level, ref int lastAlertBar, ref bool alertTriggeredForRange, bool useAlert, string levelName)
+    {
+        if (!useAlert || lastAlertBar == bar || (OncePerRange && alertTriggeredForRange))
+            return;
+
+        bool triggered = false;
+        string message = $"{levelName} crossed: {level}";
+
+        // Direct crossing check
+        bool directCrossing = (candle.Close >= level && prevCandle.Close <= level) ||
+                              (candle.Close <= level && prevCandle.Close >= level);
+
+        if (directCrossing)
+        {
+            triggered = true;
+        }
+        // Approximation check if enabled
+        else if (UseApproximationAlert)
+        {
+            decimal approximationDistance = ApproximationTicks * InstrumentInfo.TickSize;
+
+            // Check if price is within the approximation range
+            bool isWithinRange = Math.Abs(candle.Close - level) <= approximationDistance &&
+                                 Math.Abs(prevCandle.Close - level) > approximationDistance;
+
+            if (isWithinRange)
+            {
+                triggered = true;
+                message = $"{levelName} approximation ({ApproximationTicks} ticks): {level}";
             }
         }
 
-        // Check for low level crossing
-        if (UseLowAlert &&
-            (!OncePerRange || !_lowAlertTriggeredForRange) &&
-            _lastLowAlertBar != bar)
+        if (triggered)
         {
-            if ((candle.Close <= _currentLow && prevCandle.Close >= _currentLow) ||
-                (candle.Close >= _currentLow && prevCandle.Close <= _currentLow))
+            if (!OmitConsecutiveAlerts || (OmitConsecutiveAlerts && lastAlertBar < bar - 1))
             {
-                if (OmitConsecutiveAlerts && _lastLowAlertBar < bar - 1)
-                {
-                    AddAlert(AlertFile, InstrumentInfo.Instrument,
-                        $"Opening Range Low crossed: {_currentLow}",
-                        AlertBGColor, AlertForeColor);
-                }
-
-                _lastLowAlertBar = bar;
-                _lowAlertTriggeredForRange = true;
+                AddAlert(AlertFile, InstrumentInfo.Instrument, message, AlertBGColor, AlertForeColor);
             }
+
+            lastAlertBar = bar;
+            alertTriggeredForRange = true;
         }
     }
+
 
     #endregion
 }
