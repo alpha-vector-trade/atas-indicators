@@ -44,8 +44,11 @@ public class OpeningRange : Indicator
     private TimeFrameType _timeFrame = TimeFrameType.Weekly;
     private FilterInt _dailyMinutes = new(false) { Value = 30 };
     private bool _showHistoricalRanges = true;
+    private bool _showFormationMarkers = true;
     private bool _renderOnlyAfterFormation = false;
     private int _lookBackDays = 60;
+    private bool _showText = true;
+    private bool _showPrice = true;
 
     private decimal _currentHigh;
     private decimal _currentLow;
@@ -108,57 +111,20 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Show Historical Ranges", GroupName = "Drawing", Order = 40)]
-    public bool ShowHistoricalRanges
-    {
-        get => _showHistoricalRanges;
-        set
-        {
-            _showHistoricalRanges = value;
-            RecalculateValues();
-        }
-    }
-
-    [Display(Name = "Show Text", GroupName = "Drawing", Order = 60)]
-    public bool ShowText { get; set; } = true;
-
-    [Display(Name = "Show Price", GroupName = "Drawing", Order = 70)]
-    public bool ShowPrice { get; set; } = true;
-
-    [Display(Name = "Extend Lines", GroupName = "Drawing", Order = 75)]
-    public bool ExtendLines { get; set; }
-
-    [Display(Name = "Show Area", GroupName = "Drawing", Order = 76)]
-    public bool ShowArea { get; set; }
-
-    [Display(Name = "Area Color", GroupName = "Drawing", Order = 77)]
-    public Color AreaColor { get; set; } = Color.FromArgb(80, Color.Blue);
-
-    [Display(Name = "Show Above Chart", GroupName = "Drawing", Order = 78)]
-    public bool ShowAboveChart
-    {
-        get => DrawAbovePrice;
-        set
-        {
-            DrawAbovePrice = value;
-            RedrawChart();
-        }
-    }
-
-    [Display(Name = "High Line", GroupName = "High Range", Order = 80)]
+    [Display(Name = "High Line", GroupName = "High Range", Order = 100)]
     public PenSettings HighPen { get; set; } = new() { Color = DefaultColors.Green.Convert(), Width = 2 };
 
-    [Display(Name = "High Text", GroupName = "High Range", Order = 90)]
+    [Display(Name = "High Text", GroupName = "High Range", Order = 120)]
     public string HighText { get; set; } = "Range High";
 
-    [Display(Name = "Low Line", GroupName = "Low Range", Order = 100)]
+    [Display(Name = "Low Line", GroupName = "Low Range", Order = 130)]
     public PenSettings LowPen { get; set; } = new() { Color = DefaultColors.Red.Convert(), Width = 2 };
 
-    [Display(Name = "Low Text", GroupName = "Low Range", Order = 110)]
+    [Display(Name = "Low Text", GroupName = "Low Range", Order = 140)]
     public string LowText { get; set; } = "Range Low";
 
     [Description("Hide lines and area during formation of the range")]
-    [Display(Name = "Render only after formation", GroupName = "Formation", Order = 120)]
+    [Display(Name = "Render only after formation", GroupName = "Formation", Order = 200)]
     public bool RenderOnlyAfterFormation
     {
         get => _renderOnlyAfterFormation;
@@ -170,38 +136,98 @@ public class OpeningRange : Indicator
     }
 
     [Description("Display markers at the high and low during formation of the range")]
-    [Display(Name = "Display Markers", GroupName = "Formation", Order = 130)]
-    public bool ShowFormationMarkers { get; set; } = true;
+    [Display(Name = "Display Markers", GroupName = "Formation", Order = 210)]
+    public bool ShowFormationMarkers
+    {
+        get => _showFormationMarkers;
+        set
+        {
+            _showFormationMarkers = value;
+            RecalculateValues();
+        }
+    }
 
-    [Display(Name = "Type", GroupName = "Formation", Order = 140)]
+    [Display(Name = "Type", GroupName = "Formation", Order = 220)]
     public ObjectType FormationMarkerType { get; set; } = ObjectType.Diamond;
 
-    [Display(Name = "Size", GroupName = "Formation", Order = 150)]
+    [Display(Name = "Size", GroupName = "Formation", Order = 230)]
     [Range(1, 20)]
     public int FormationMarkerSize { get; set; } = 8;
 
-    [Display(Name = "High Line Alert", GroupName = "Alerts", Order = 200)]
+    [Display(Name = "Show Historical Ranges", GroupName = "Drawing", Order = 240)]
+    public bool ShowHistoricalRanges
+    {
+        get => _showHistoricalRanges;
+        set
+        {
+            _showHistoricalRanges = value;
+            RecalculateValues();
+        }
+    }
+
+    [Display(Name = "Show Text", GroupName = "Drawing", Order = 250)]
+    public bool ShowText
+    {
+        get => _showText;
+        set
+        {
+            _showText = value;
+            RecalculateValues();
+        }
+    }
+
+    [Display(Name = "Show Price", GroupName = "Drawing", Order = 260)]
+    public bool ShowPrice
+    {
+        get => _showPrice;
+        set
+        {
+            _showPrice = value;
+            RecalculateValues();
+        }
+    }
+
+    [Display(Name = "Extend Lines", GroupName = "Drawing", Order = 270)]
+    public bool ExtendLines { get; set; }
+
+    [Display(Name = "Show Area", GroupName = "Drawing", Order = 280)]
+    public bool ShowArea { get; set; }
+
+    [Display(Name = "Area Color", GroupName = "Drawing", Order = 290)]
+    public Color AreaColor { get; set; } = Color.FromArgb(80, Color.Blue);
+
+    [Display(Name = "Show Above Chart", GroupName = "Drawing", Order = 300)]
+    public bool ShowAboveChart
+    {
+        get => DrawAbovePrice;
+        set
+        {
+            DrawAbovePrice = value;
+            RedrawChart();
+        }
+    }
+
+    [Display(Name = "High Line Alert", GroupName = "Alerts", Order = 400)]
     public bool UseHighAlert { get; set; }
 
-    [Display(Name = "Low Line Alert", GroupName = "Alerts", Order = 210)]
+    [Display(Name = "Low Line Alert", GroupName = "Alerts", Order = 410)]
     public bool UseLowAlert { get; set; }
 
-    [Display(Name = "Once Per Range", GroupName = "Alerts", Order = 220)]
+    [Display(Name = "Once Per Range", GroupName = "Alerts", Order = 420)]
     public bool OncePerRange { get; set; }
 
-    [Display(Name = "Omit Consecutive Alerts", GroupName = "Alerts", Order = 225)]
+    [Display(Name = "Omit Consecutive Alerts", GroupName = "Alerts", Order = 430)]
     public bool OmitConsecutiveAlerts { get; set; } = true;
 
 
-    [Display(Name = "Alert File", GroupName = "Alerts", Order = 230)]
+    [Display(Name = "Alert File", GroupName = "Alerts", Order = 440)]
     public string AlertFile { get; set; } = "alert1";
 
-    [Display(Name = "Font Color", GroupName = "Alerts", Order = 240)]
+    [Display(Name = "Font Color", GroupName = "Alerts", Order = 450)]
     public System.Windows.Media.Color AlertForeColor { get; set; } = System.Windows.Media.Color.FromArgb(255, 247, 249, 249);
 
-    [Display(Name = "Background", GroupName = "Alerts", Order = 250)]
+    [Display(Name = "Background", GroupName = "Alerts", Order = 460)]
     public System.Windows.Media.Color AlertBGColor { get; set; } = System.Windows.Media.Color.FromArgb(255, 75, 72, 72);
-
 
     #endregion
 

@@ -435,6 +435,7 @@ public class DailyLinesExtended : Indicator
     private decimal _prevOpen;
     private int _prevOpenBar;
     private bool _showText = true;
+    private bool _showPrice = true;
     private TimeSpan _startTime;
     private int _targetBar;
 
@@ -537,7 +538,15 @@ public class DailyLinesExtended : Indicator
     }
 
     [Display(ResourceType = typeof(Resources), Name = "PriceLocation", GroupName = "Show", Order = 210)]
-    public bool ShowPrice { get; set; } = true;
+    public bool ShowPrice
+    {
+	    get => _showPrice;
+	    set
+	    {
+		    _showPrice = value;
+		    RecalculateValues();
+	    }
+    }
 
     [Display(ResourceType = typeof(Resources), Name = "FirstBar", GroupName = "Drawing", Order = 300)]
     public bool DrawFromBar
