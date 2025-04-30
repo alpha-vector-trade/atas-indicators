@@ -102,12 +102,12 @@ public class SessionColorExtended : Indicator
     public bool ShowStartOnly { get; set; } = true;
 
     [Display(ResourceType = typeof(Resources), Name = "AreaColor", GroupName = "Settings", Order = 40)]
-    public System.Windows.Media.Color AreaColor
+    public Color AreaColor
     {
-        get => _areaColor.Convert();
+        get => _areaColor;
         set
         {
-            _areaColor = value.Convert();
+            _areaColor = value;
             _fillBrush = _areaColor;
             RecalculateValues();
         }

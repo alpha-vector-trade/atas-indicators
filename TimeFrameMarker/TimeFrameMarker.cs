@@ -18,8 +18,6 @@ using OFT.Rendering.Tools;
 
 using Utils.Common.Logging;
 
-using Color = System.Drawing.Color;
-
 [DisplayName("Timeframe Marker")]
 [Category("AlphaVector")]
 [HelpLink("https://github.com/alpha-vector-trade/atas-indicators")]

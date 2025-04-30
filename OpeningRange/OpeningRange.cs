@@ -231,10 +231,10 @@ public class OpeningRange : Indicator
     public string AlertFile { get; set; } = "alert1";
 
     [Display(Name = "Font Color", GroupName = "Alerts", Order = 470)]
-    public System.Windows.Media.Color AlertForeColor { get; set; } = System.Windows.Media.Color.FromArgb(255, 247, 249, 249);
+    public Color AlertForeColor { get; set; } = Color.FromArgb(255, 247, 249, 249);
 
     [Display(Name = "Background", GroupName = "Alerts", Order = 480)]
-    public System.Windows.Media.Color AlertBGColor { get; set; } = System.Windows.Media.Color.FromArgb(255, 75, 72, 72);
+    public Color AlertBgColor { get; set; } = Color.FromArgb(255, 75, 72, 72);
 
     #endregion
 
@@ -677,14 +677,13 @@ public class OpeningRange : Indicator
         {
             if (!OmitConsecutiveAlerts || (OmitConsecutiveAlerts && lastAlertBar < bar - 1))
             {
-                AddAlert(AlertFile, InstrumentInfo.Instrument, message, AlertBGColor, AlertForeColor);
+                AddAlert(AlertFile, InstrumentInfo.Instrument, message, AlertBgColor.Convert(), AlertForeColor.Convert());
             }
 
             lastAlertBar = bar;
             alertTriggeredForRange = true;
         }
     }
-
 
     #endregion
 }
