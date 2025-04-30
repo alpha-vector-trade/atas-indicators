@@ -119,7 +119,7 @@
             }
         }
 
-        [Display(ResourceType = typeof(Resources), GroupName = "Colors", Name = "BackGround", Order = 11)]
+        [Display(ResourceType = typeof(Resources), GroupName = "Colors", Name = "BackGround", Order = 13)]
         public Color BackgroundColor
         {
             get => _bgColor;
@@ -130,30 +130,7 @@
             }
         }
 
-        [Display(ResourceType = typeof(Resources), GroupName = "Values", Name = "LowRatio", Order = 20)]
-        public decimal LowRatio
-        {
-            get => _lowRatio;
-            set
-            {
-                _lowRatio = value;
-                ReDraw();
-            }
-        }
-
-        [Display(ResourceType = typeof(Resources), GroupName = "Values", Name = "NeutralRatio", Order = 21)]
-
-        public decimal NeutralRatio
-        {
-            get => _neutralRatio;
-            set
-            {
-                _neutralRatio = value;
-                ReDraw();
-            }
-        }
-
-        [Display(ResourceType = typeof(Resources), GroupName = "Colors", Name = "FontSize", Order = 22)]
+        [Display(ResourceType = typeof(Resources), GroupName = "Colors", Name = "FontSize", Order = 14)]
         [Range(1, 10000)]
         public int FontSize
         {
@@ -165,7 +142,7 @@
             }
         }
 
-        [Display(GroupName = "Colors", Name = "Display Distance", Order = 23)]
+        [Display(ResourceType = typeof(Resources), GroupName = "Colors", Name = "DistanceFromCandle", Order = 15)]
         [Range(1, 10)]
         public int DisplayDistance
         {
@@ -174,6 +151,29 @@
             {
                 _displayDistance = value;
                 RecalculateValues();
+            }
+        }
+
+        [Display(ResourceType = typeof(Resources), GroupName = "Settings", Name = "LowRatio", Order = 20)]
+        public decimal LowRatio
+        {
+            get => _lowRatio;
+            set
+            {
+                _lowRatio = value;
+                ReDraw();
+            }
+        }
+
+        [Display(ResourceType = typeof(Resources), GroupName = "Settings", Name = "NeutralRatio", Order = 21)]
+
+        public decimal NeutralRatio
+        {
+            get => _neutralRatio;
+            set
+            {
+                _neutralRatio = value;
+                ReDraw();
             }
         }
 

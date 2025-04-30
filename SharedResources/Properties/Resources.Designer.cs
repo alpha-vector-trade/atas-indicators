@@ -1104,6 +1104,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color scheme.
+        /// </summary>
+        public static string ColorScheme {
+            get {
+                return ResourceManager.GetString("ColorScheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Combined.
         /// </summary>
         public static string Combined {
@@ -1127,6 +1136,15 @@ namespace SharedResources.Properties {
         public static string Common {
             get {
                 return ResourceManager.GetString("Common", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content mode.
+        /// </summary>
+        public static string ContentMode {
+            get {
+                return ResourceManager.GetString("ContentMode", resourceCulture);
             }
         }
         
@@ -1284,11 +1302,38 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cycle down.
+        /// </summary>
+        public static string CycleDown {
+            get {
+                return ResourceManager.GetString("CycleDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cycle up.
+        /// </summary>
+        public static string CycleUp {
+            get {
+                return ResourceManager.GetString("CycleUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Daily.
         /// </summary>
         public static string Daily {
             get {
                 return ResourceManager.GetString("Daily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daily Minutes.
+        /// </summary>
+        public static string DailyMinutes {
+            get {
+                return ResourceManager.GetString("DailyMinutes", resourceCulture);
             }
         }
         
@@ -1527,6 +1572,24 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display Markers.
+        /// </summary>
+        public static string DisplayMarkers {
+            get {
+                return ResourceManager.GetString("DisplayMarkers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance from candle.
+        /// </summary>
+        public static string DistanceFromCandle {
+            get {
+                return ResourceManager.GetString("DistanceFromCandle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Divisor.
         /// </summary>
         public static string Divisor {
@@ -1707,6 +1770,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable hotkeys.
+        /// </summary>
+        public static string EnableHotkeys {
+            get {
+                return ResourceManager.GetString("EnableHotkeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End time.
         /// </summary>
         public static string EndTime {
@@ -1748,6 +1820,15 @@ namespace SharedResources.Properties {
         public static string Exact {
             get {
                 return ResourceManager.GetString("Exact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extend lines.
+        /// </summary>
+        public static string ExtendLines {
+            get {
+                return ResourceManager.GetString("ExtendLines", resourceCulture);
             }
         }
         
@@ -1968,6 +2049,60 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Footprint layout 1.
+        /// </summary>
+        public static string FootprintLayout1 {
+            get {
+                return ResourceManager.GetString("FootprintLayout1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Footprint layout 2.
+        /// </summary>
+        public static string FootprintLayout2 {
+            get {
+                return ResourceManager.GetString("FootprintLayout2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Footprint layout 3.
+        /// </summary>
+        public static string FootprintLayout3 {
+            get {
+                return ResourceManager.GetString("FootprintLayout3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Footprint layout 4.
+        /// </summary>
+        public static string FootprintLayout4 {
+            get {
+                return ResourceManager.GetString("FootprintLayout4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Footprint layout 5.
+        /// </summary>
+        public static string FootprintLayout5 {
+            get {
+                return ResourceManager.GetString("FootprintLayout5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formation.
+        /// </summary>
+        public static string Formation {
+            get {
+                return ResourceManager.GetString("Formation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frame multiplier.
         /// </summary>
         public static string FrameMultiplier {
@@ -1982,6 +2117,24 @@ namespace SharedResources.Properties {
         public static string FrameSize {
             get {
                 return ResourceManager.GetString("FrameSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global modifier 1.
+        /// </summary>
+        public static string GlobalModifier1 {
+            get {
+                return ResourceManager.GetString("GlobalModifier1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global modifier 2.
+        /// </summary>
+        public static string GlobalModifier2 {
+            get {
+                return ResourceManager.GetString("GlobalModifier2", resourceCulture);
             }
         }
         
@@ -2157,6 +2310,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to High line alert.
+        /// </summary>
+        public static string HighLineAlert {
+            get {
+                return ResourceManager.GetString("HighLineAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to High Line Color.
         /// </summary>
         public static string HighLineColor {
@@ -2211,6 +2373,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to High Range.
+        /// </summary>
+        public static string HighRange {
+            get {
+                return ResourceManager.GetString("HighRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to High Ratio.
         /// </summary>
         public static string HighRatio {
@@ -2252,6 +2423,15 @@ namespace SharedResources.Properties {
         public static string HorizontalOffset {
             get {
                 return ResourceManager.GetString("HorizontalOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotkey.
+        /// </summary>
+        public static string Hotkey {
+            get {
+                return ResourceManager.GetString("Hotkey", resourceCulture);
             }
         }
         
@@ -2490,6 +2670,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cycle through layouts.
+        /// </summary>
+        public static string LayoutCycling {
+            get {
+                return ResourceManager.GetString("LayoutCycling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Left.
         /// </summary>
         public static string Left {
@@ -2724,11 +2913,29 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Low line alert.
+        /// </summary>
+        public static string LowLineAlert {
+            get {
+                return ResourceManager.GetString("LowLineAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Low Line Color.
         /// </summary>
         public static string LowLineColor {
             get {
                 return ResourceManager.GetString("LowLineColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Low Range.
+        /// </summary>
+        public static string LowRange {
+            get {
+                return ResourceManager.GetString("LowRange", resourceCulture);
             }
         }
         
@@ -3480,6 +3687,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Once per range.
+        /// </summary>
+        public static string OncePerRange {
+            get {
+                return ResourceManager.GetString("OncePerRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only Alerts are Supported.
         /// </summary>
         public static string OnlyAlertsSupported {
@@ -4011,6 +4227,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Render only after formation.
+        /// </summary>
+        public static string RenderAfterFormation {
+            get {
+                return ResourceManager.GetString("RenderAfterFormation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Render periods.
         /// </summary>
         public static string RenderPeriods {
@@ -4488,6 +4713,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show historical ranges.
+        /// </summary>
+        public static string ShowHistoricalRanges {
+            get {
+                return ResourceManager.GetString("ShowHistoricalRanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show instrument.
         /// </summary>
         public static string ShowInstrument {
@@ -4520,6 +4754,15 @@ namespace SharedResources.Properties {
         public static string ShowPeriod {
             get {
                 return ResourceManager.GetString("ShowPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show price.
+        /// </summary>
+        public static string ShowPrice {
+            get {
+                return ResourceManager.GetString("ShowPrice", resourceCulture);
             }
         }
         
@@ -4587,7 +4830,16 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Show text.
+        /// </summary>
+        public static string ShowText {
+            get {
+                return ResourceManager.GetString("ShowText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show ticks.
         /// </summary>
         public static string ShowTicks {
             get {

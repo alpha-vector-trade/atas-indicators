@@ -16,15 +16,19 @@
         <AtasPlatformDir>C:\Program Files (x86)\ATAS Platform</AtasPlatformDir>
     </PropertyGroup>
 
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Message Importance="high" Text="Copying $(TargetPath) to $(AtasIndicatorsDir)"/>
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AtasIndicatorsDir)"/>
+    <Target Name="MergeAssemblies" AfterTargets="PostBuildEvent">
+        <Exec Command="$(ILRepack) /lib:&quot;$(AtasPlatformDir)&quot; /out:$(TargetDir)Merged\$(TargetFileName) $(TargetPath) $(TargetDir)SharedResources.dll"/>
+        <Copy SourceFiles="$(TargetDir)Merged\$(TargetFileName)" DestinationFolder="$(AtasIndicatorsDir)"/>
     </Target>
 
     <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk"/>
     <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk"/>
 
     <ItemGroup>
+        <PackageReference Include="ILRepack" Version="2.0.41">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         <PackageReference Include="morelinq" Version="4.3.0"/>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0"/>
@@ -50,6 +54,10 @@
         <Reference Include="Utils.Common">
             <HintPath>$(AtasPlatformDir)\Utils.Common.dll</HintPath>
         </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharedResources\SharedResources.csproj" />
     </ItemGroup>
 
 </Project>

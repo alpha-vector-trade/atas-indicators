@@ -1,4 +1,6 @@
-﻿namespace ATAS.Indicators.AlphaVector;
+﻿using SharedResources.Properties;
+
+namespace ATAS.Indicators.AlphaVector;
 
 using System;
 using System.Collections.Generic;
@@ -53,7 +55,7 @@ public class TimeFrameMarker : Indicator
         DataSeries[0].IsHidden = true;
     }
 
-    [Display(Name = "Period Type", Order = 100)]
+    [Display(ResourceType = typeof(Resources), Name = "PeriodType", GroupName = "Settings", Order = 100)]
     public PeriodType Period
     {
         get => _periodType;
@@ -64,7 +66,7 @@ public class TimeFrameMarker : Indicator
         }
     }
 
-    [Display(Name = "Line", Order = 200, GroupName = "Line")]
+    [Display(ResourceType = typeof(Resources), Name = "Line", GroupName = "Drawing", Order = 200)]
     public PenSettings LinePen
     {
         get => _linePen;

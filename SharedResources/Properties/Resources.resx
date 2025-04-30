@@ -1393,7 +1393,7 @@
     <comment>ZigZag</comment>
   </data>
   <data name="ShowTicks" xml:space="preserve">
-    <value />
+    <value>Show ticks</value>
   </data>
   <data name="TimeFilter" xml:space="preserve">
     <value>Time Filter</value>
@@ -2350,5 +2350,89 @@
   </data>
   <data name="OmitConsecutiveAlerts" xml:space="preserve">
     <value>Omit on consecutive candles</value>
+  </data>
+  <data name="DistanceFromCandle" xml:space="preserve">
+    <value>Distance from candle</value>
+  </data>
+  <data name="DailyMinutes" xml:space="preserve">
+    <value>Daily Minutes</value>
+  </data>
+  <data name="HighRange" xml:space="preserve">
+    <value>High Range</value>
+  </data>
+  <data name="LowRange" xml:space="preserve">
+    <value>Low Range</value>
+  </data>
+  <data name="Formation" xml:space="preserve">
+    <value>Formation</value>
+  </data>
+  <data name="RenderAfterFormation" xml:space="preserve">
+    <value>Render only after formation</value>
+  </data>
+  <data name="DisplayMarkers" xml:space="preserve">
+    <value>Display Markers</value>
+  </data>
+  <data name="ShowHistoricalRanges" xml:space="preserve">
+    <value>Show historical ranges</value>
+  </data>
+  <data name="ShowText" xml:space="preserve">
+    <value>Show text</value>
+  </data>
+  <data name="ShowPrice" xml:space="preserve">
+    <value>Show price</value>
+  </data>
+  <data name="ExtendLines" xml:space="preserve">
+    <value>Extend lines</value>
+  </data>
+  <data name="HighLineAlert" xml:space="preserve">
+    <value>High line alert</value>
+  </data>
+  <data name="LowLineAlert" xml:space="preserve">
+    <value>Low line alert</value>
+  </data>
+  <data name="OncePerRange" xml:space="preserve">
+    <value>Once per range</value>
+  </data>
+  <data name="EnableHotkeys" xml:space="preserve">
+    <value>Enable hotkeys</value>
+  </data>
+  <data name="GlobalModifier1" xml:space="preserve">
+    <value>Global modifier 1</value>
+  </data>
+  <data name="GlobalModifier2" xml:space="preserve">
+    <value>Global modifier 2</value>
+  </data>
+  <data name="LayoutCycling" xml:space="preserve">
+    <value>Cycle through layouts</value>
+  </data>
+  <data name="CycleUp" xml:space="preserve">
+    <value>Cycle up</value>
+  </data>
+  <data name="CycleDown" xml:space="preserve">
+    <value>Cycle down</value>
+  </data>
+  <data name="FootprintLayout1" xml:space="preserve">
+    <value>Footprint layout 1</value>
+  </data>
+  <data name="FootprintLayout2" xml:space="preserve">
+    <value>Footprint layout 2</value>
+  </data>
+  <data name="FootprintLayout3" xml:space="preserve">
+    <value>Footprint layout 3</value>
+  </data>
+  <data name="FootprintLayout4" xml:space="preserve">
+    <value>Footprint layout 4</value>
+  </data>
+  <data name="FootprintLayout5" xml:space="preserve">
+    <value>Footprint layout 5</value>
+  </data>
+  <data name="Hotkey" xml:space="preserve">
+    <value>Hotkey</value>
+  </data>
+  <data name="ContentMode" xml:space="preserve">
+    <value>Content mode</value>
+  </data>
+  <data name="ColorScheme" xml:space="preserve">
+    <value>Color scheme</value>
   </data>
 </root>

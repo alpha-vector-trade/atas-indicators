@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace ATAS.Indicators.AlphaVector;
+﻿namespace ATAS.Indicators.AlphaVector;
 
 using ATAS.Indicators;
 using OFT.Attributes;
-using OFT.Rendering.Context;
-using OFT.Rendering.Settings;
-using OFT.Rendering.Tools;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.Linq;
+using SharedResources.Properties;
 
 [DisplayName("Charting Hotkeys")]
 [Category("AlphaVector")]
@@ -29,118 +26,118 @@ public class ChartingHotkeys : Indicator
 
     #region General Settings
 
-    [Display(GroupName = "General", Name = "Enable Hotkeys", Order = 10)]
+    [Display(ResourceType = typeof(Resources), GroupName = "Settings", Name = "EnableHotkeys", Order = 10)]
     public bool EnableHotkeys { get; set; } = true;
 
-    [Display(GroupName = "General", Name = "Global Modifier 1", Order = 20)]
+    [Display(ResourceType = typeof(Resources), GroupName = "Settings", Name = "GlobalModifier1", Order = 20)]
     public Key GlobalModifier1 { get; set; } = Key.LeftCtrl;
 
-    [Display(GroupName = "General", Name = "Global Modifier 2", Order = 30)]
+    [Display(ResourceType = typeof(Resources), GroupName = "Settings", Name = "GlobalModifier2", Order = 30)]
     public Key GlobalModifier2 { get; set; } = Key.None;
 
     #endregion
 
     #region Layout Cycle
 
-    [Display(GroupName = "Cycle Through Layouts", Name = "Cycle Up", Order = 40)]
+    [Display(ResourceType = typeof(Resources), GroupName = "LayoutCycling", Name = "CycleUp", Order = 40)]
     public Key LayoutCycleUpHotkey { get; set; } = Key.PageUp;
 
-    [Display(GroupName = "Cycle Through Layouts", Name = "Cycle Down", Order = 50)]
+    [Display(ResourceType = typeof(Resources), GroupName = "LayoutCycling", Name = "CycleDown", Order = 50)]
     public Key LayoutCycleDownHotkey { get; set; } = Key.PageDown;
 
     #endregion
 
     #region Footprint Layout 1
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Enabled", Order = 100)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout1", Name = "Enabled", Order = 100)]
     public bool Layout1Enabled { get; set; } = true;
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Hotkey", Order = 110)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout1", Name = "Hotkey", Order = 110)]
     public Key Layout1Hotkey { get; set; } = Key.D1;
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Visual Mode", Order = 120)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout1", Name = "VisualMode", Order = 120)]
     public FootprintVisualModes Layout1FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Content Mode", Order = 130)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout1", Name = "ContentMode", Order = 130)]
     public FootprintContentModes Layout1FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 1", Name = "Color Scheme", Order = 140)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout1", Name = "ColorScheme", Order = 140)]
     public FootprintColorSchemes Layout1FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
 
-    #region Footprint Footprint Layout 2
+    #region Footprint Layout 2
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Enabled", Order = 200)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout2", Name = "Enabled", Order = 200)]
     public bool Layout2Enabled { get; set; } = true;
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Hotkey", Order = 210)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout2", Name = "Hotkey", Order = 210)]
     public Key Layout2Hotkey { get; set; } = Key.D2;
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Visual Mode", Order = 220)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout2", Name = "VisualMode", Order = 220)]
     public FootprintVisualModes Layout2FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Content Mode", Order = 230)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout2", Name = "ContentMode", Order = 230)]
     public FootprintContentModes Layout2FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 2", Name = "Color Scheme", Order = 240)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout2", Name = "ColorScheme", Order = 240)]
     public FootprintColorSchemes Layout2FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
 
     #region Footprint Layout 3
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Enabled", Order = 300)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout3", Name = "Enabled", Order = 300)]
     public bool Layout3Enabled { get; set; } = true;
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Hotkey", Order = 310)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout3", Name = "Hotkey", Order = 310)]
     public Key Layout3Hotkey { get; set; } = Key.D3;
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Visual Mode", Order = 320)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout3", Name = "VisualMode", Order = 320)]
     public FootprintVisualModes Layout3FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Content Mode", Order = 330)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout3", Name = "ContentMode", Order = 330)]
     public FootprintContentModes Layout3FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 3", Name = "Color Scheme", Order = 340)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout3", Name = "ColorScheme", Order = 340)]
     public FootprintColorSchemes Layout3FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
 
     #region Footprint Layout 4
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Enabled", Order = 400)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout4", Name = "Enabled", Order = 400)]
     public bool Layout4Enabled { get; set; } = true;
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Hotkey", Order = 410)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout4", Name = "Hotkey", Order = 410)]
     public Key Layout4Hotkey { get; set; } = Key.D4;
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Visual Mode", Order = 420)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout4", Name = "VisualMode", Order = 420)]
     public FootprintVisualModes Layout4FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Content Mode", Order = 430)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout4", Name = "ContentMode", Order = 430)]
     public FootprintContentModes Layout4FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 4", Name = "Color Scheme", Order = 440)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout4", Name = "ColorScheme", Order = 440)]
     public FootprintColorSchemes Layout4FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion
 
     #region Footprint Layout 5
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Enabled", Order = 500)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout5", Name = "Enabled", Order = 500)]
     public bool Layout5Enabled { get; set; } = true;
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Hotkey", Order = 510)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout5", Name = "Hotkey", Order = 510)]
     public Key Layout5Hotkey { get; set; } = Key.D5;
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Visual Mode", Order = 520)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout5", Name = "VisualMode", Order = 520)]
     public FootprintVisualModes Layout5FootprintVisualMode { get; set; } = FootprintVisualModes.FullRow;
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Content Mode", Order = 530)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout5", Name = "ContentMode", Order = 530)]
     public FootprintContentModes Layout5FootprintContentMode { get; set; } = FootprintContentModes.BidXAsk;
 
-    [Display(GroupName = "Footprint Layout 5", Name = "Color Scheme", Order = 540)]
+    [Display(ResourceType = typeof(Resources), GroupName = "FootprintLayout5", Name = "ColorScheme", Order = 540)]
     public FootprintColorSchemes Layout5FootprintColorScheme { get; set; } = FootprintColorSchemes.Delta;
 
     #endregion

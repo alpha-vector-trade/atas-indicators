@@ -1,4 +1,6 @@
-﻿namespace ATAS.Indicators.AlphaVector;
+﻿using SharedResources.Properties;
+
+namespace ATAS.Indicators.AlphaVector;
 
 using System;
 using System.ComponentModel;
@@ -74,7 +76,7 @@ public class OpeningRange : Indicator
 
     #region Properties
 
-    [Display(Name = "Time Frame", GroupName = "General", Order = 10)]
+    [Display(ResourceType = typeof(Resources), Name = "TimeFrame", GroupName = "Settings", Order = 10)]
     public TimeFrameType RangeTimeFrame
     {
         get => _timeFrame;
@@ -87,7 +89,7 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Daily Minutes", GroupName = "General", Order = 20)]
+    [Display(ResourceType = typeof(Resources), Name = "DailyMinutes", GroupName = "Settings", Order = 20)]
     [Range(1, 1440)]
     public FilterInt DailyMinutes
     {
@@ -99,7 +101,7 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Days Look Back", GroupName = "General", Order = 30)]
+    [Display(ResourceType = typeof(Resources), Name = "DaysLookBack", GroupName = "Calculation", Order = int.MaxValue)]
     [Range(1, 1000)]
     public int LookBackDays
     {
@@ -111,20 +113,20 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "High Line", GroupName = "High Range", Order = 100)]
+    [Display(ResourceType = typeof(Resources), Name = "Line", GroupName = "HighRange", Order = 100)]
     public PenSettings HighPen { get; set; } = new() { Color = DefaultColors.Green.Convert(), Width = 2 };
 
-    [Display(Name = "High Text", GroupName = "High Range", Order = 120)]
+    [Display(ResourceType = typeof(Resources), Name = "Text", GroupName = "HighRange", Order = 120)]
     public string HighText { get; set; } = "Range High";
 
-    [Display(Name = "Low Line", GroupName = "Low Range", Order = 130)]
+    [Display(ResourceType = typeof(Resources), Name = "Line", GroupName = "LowRange", Order = 130)]
     public PenSettings LowPen { get; set; } = new() { Color = DefaultColors.Red.Convert(), Width = 2 };
 
-    [Display(Name = "Low Text", GroupName = "Low Range", Order = 140)]
+    [Display(ResourceType = typeof(Resources), Name = "Text", GroupName = "LowRange", Order = 140)]
     public string LowText { get; set; } = "Range Low";
 
     [Description("Hide lines and area during formation of the range")]
-    [Display(Name = "Render only after formation", GroupName = "Formation", Order = 200)]
+    [Display(ResourceType = typeof(Resources), Name = "RenderAfterFormation", GroupName = "Formation", Order = 200)]
     public bool RenderOnlyAfterFormation
     {
         get => _renderOnlyAfterFormation;
@@ -136,7 +138,7 @@ public class OpeningRange : Indicator
     }
 
     [Description("Display markers at the high and low during formation of the range")]
-    [Display(Name = "Display Markers", GroupName = "Formation", Order = 210)]
+    [Display(ResourceType = typeof(Resources), Name = "DisplayMarkers", GroupName = "Formation", Order = 210)]
     public bool ShowFormationMarkers
     {
         get => _showFormationMarkers;
@@ -147,14 +149,14 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Type", GroupName = "Formation", Order = 220)]
+    [Display(ResourceType = typeof(Resources), Name = "Type", GroupName = "Formation", Order = 220)]
     public ObjectType FormationMarkerType { get; set; } = ObjectType.Diamond;
 
-    [Display(Name = "Size", GroupName = "Formation", Order = 230)]
+    [Display(ResourceType = typeof(Resources), Name = "Size", GroupName = "Formation", Order = 230)]
     [Range(1, 20)]
     public int FormationMarkerSize { get; set; } = 8;
 
-    [Display(Name = "Show Historical Ranges", GroupName = "Drawing", Order = 240)]
+    [Display(ResourceType = typeof(Resources), Name = "ShowHistoricalRanges", GroupName = "Drawing", Order = 240)]
     public bool ShowHistoricalRanges
     {
         get => _showHistoricalRanges;
@@ -165,7 +167,7 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Show Text", GroupName = "Drawing", Order = 250)]
+    [Display(ResourceType = typeof(Resources), Name = "ShowText", GroupName = "Drawing", Order = 250)]
     public bool ShowText
     {
         get => _showText;
@@ -176,7 +178,7 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Show Price", GroupName = "Drawing", Order = 260)]
+    [Display(ResourceType = typeof(Resources), Name = "ShowPrice", GroupName = "Drawing", Order = 260)]
     public bool ShowPrice
     {
         get => _showPrice;
@@ -187,16 +189,16 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "Extend Lines", GroupName = "Drawing", Order = 270)]
+    [Display(ResourceType = typeof(Resources), Name = "ExtendLines", GroupName = "Drawing", Order = 270)]
     public bool ExtendLines { get; set; }
 
-    [Display(Name = "Show Area", GroupName = "Drawing", Order = 280)]
+    [Display(ResourceType = typeof(Resources), Name = "ShowArea", GroupName = "Drawing", Order = 280)]
     public bool ShowArea { get; set; }
 
-    [Display(Name = "Area Color", GroupName = "Drawing", Order = 290)]
+    [Display(ResourceType = typeof(Resources), Name = "AreaColor", GroupName = "Drawing", Order = 290)]
     public Color AreaColor { get; set; } = Color.FromArgb(80, Color.Blue);
 
-    [Display(Name = "Show Above Chart", GroupName = "Drawing", Order = 300)]
+    [Display(ResourceType = typeof(Resources), Name = "ShowAboveChart", GroupName = "Drawing", Order = 300)]
     public bool ShowAboveChart
     {
         get => DrawAbovePrice;
@@ -207,33 +209,32 @@ public class OpeningRange : Indicator
         }
     }
 
-    [Display(Name = "High Line Alert", GroupName = "Alerts", Order = 400)]
+    [Display(ResourceType = typeof(Resources), Name = "HighLineAlert", GroupName = "Alerts", Order = 400)]
     public bool UseHighAlert { get; set; }
 
-    [Display(Name = "Low Line Alert", GroupName = "Alerts", Order = 410)]
+    [Display(ResourceType = typeof(Resources), Name = "LowLineAlert", GroupName = "Alerts", Order = 410)]
     public bool UseLowAlert { get; set; }
 
-    [Display(Name = "Once Per Range", GroupName = "Alerts", Order = 420)]
+    [Display(ResourceType = typeof(Resources), Name = "OncePerRange", GroupName = "Alerts", Order = 420)]
     public bool OncePerRange { get; set; }
 
-    [Display(Name = "Omit Consecutive Alerts", GroupName = "Alerts", Order = 430)]
+    [Display(ResourceType = typeof(Resources), Name = "OmitConsecutiveAlerts", GroupName = "Alerts", Order = 430)]
     public bool OmitConsecutiveAlerts { get; set; } = true;
 
-    [Display(Name = "Use Approximation Alerts", GroupName = "Alerts", Order = 440)]
+    [Display(ResourceType = typeof(Resources), Name = "ApproximationAlert", GroupName = "Alerts", Order = 440)]
     public bool UseApproximationAlert { get; set; } = false;
 
-    [Display(Name = "Approximation Ticks", GroupName = "Alerts", Order = 450)]
+    [Display(ResourceType = typeof(Resources), Name = "ApproximationFilter", GroupName = "Alerts", Order = 450)]
     [Range(1, 100)]
-    public int ApproximationTicks { get; set; } = 3;
+    public int ApproximationFilter { get; set; } = 3;
 
-
-    [Display(Name = "Alert File", GroupName = "Alerts", Order = 460)]
+    [Display(ResourceType = typeof(Resources), Name = "AlertFile", GroupName = "Alerts", Order = 460)]
     public string AlertFile { get; set; } = "alert1";
 
-    [Display(Name = "Font Color", GroupName = "Alerts", Order = 470)]
+    [Display(ResourceType = typeof(Resources), Name = "FontColor", GroupName = "Alerts", Order = 470)]
     public Color AlertForeColor { get; set; } = Color.FromArgb(255, 247, 249, 249);
 
-    [Display(Name = "Background", GroupName = "Alerts", Order = 480)]
+    [Display(ResourceType = typeof(Resources), Name = "Background", GroupName = "Alerts", Order = 480)]
     public Color AlertBgColor { get; set; } = Color.FromArgb(255, 75, 72, 72);
 
     #endregion
@@ -660,7 +661,7 @@ public class OpeningRange : Indicator
         // Approximation check if enabled
         else if (UseApproximationAlert)
         {
-            decimal approximationDistance = ApproximationTicks * InstrumentInfo.TickSize;
+            decimal approximationDistance = ApproximationFilter * InstrumentInfo.TickSize;
 
             // Check if price is within the approximation range
             bool isWithinRange = Math.Abs(candle.Close - level) <= approximationDistance &&
@@ -669,7 +670,7 @@ public class OpeningRange : Indicator
             if (isWithinRange)
             {
                 triggered = true;
-                message = $"{levelName} approximation ({ApproximationTicks} ticks): {level}";
+                message = $"{levelName} approximation ({ApproximationFilter} ticks): {level}";
             }
         }
 
