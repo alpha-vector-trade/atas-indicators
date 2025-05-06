@@ -2435,4 +2435,19 @@
   <data name="ColorScheme" xml:space="preserve">
     <value>Color scheme</value>
   </data>
+  <data name="WebSocketUrl" xml:space="preserve">
+    <value>Websocket URL</value>
+  </data>
+  <data name="Connection" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="AutoConnect" xml:space="preserve">
+    <value>Auto Connect</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="ImportanceFilter" xml:space="preserve">
+    <value>Importance Filter</value>
+  </data>
 </root>

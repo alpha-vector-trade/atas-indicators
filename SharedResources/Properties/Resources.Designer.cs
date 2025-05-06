@@ -393,6 +393,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto Connect.
+        /// </summary>
+        public static string AutoConnect {
+            get {
+                return ResourceManager.GetString("AutoConnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto filter.
         /// </summary>
         public static string AutoFilter {
@@ -1136,6 +1145,15 @@ namespace SharedResources.Properties {
         public static string Common {
             get {
                 return ResourceManager.GetString("Common", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection.
+        /// </summary>
+        public static string Connection {
+            get {
+                return ResourceManager.GetString("Connection", resourceCulture);
             }
         }
         
@@ -2571,6 +2589,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Importance Filter.
+        /// </summary>
+        public static string ImportanceFilter {
+            get {
+                return ResourceManager.GetString("ImportanceFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Include Equal High Low.
         /// </summary>
         public static string IncludeEqualHighLow {
@@ -3620,6 +3647,15 @@ namespace SharedResources.Properties {
         public static string NeutralRatio {
             get {
                 return ResourceManager.GetString("NeutralRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News.
+        /// </summary>
+        public static string News {
+            get {
+                return ResourceManager.GetString("News", resourceCulture);
             }
         }
         
@@ -5825,6 +5861,15 @@ namespace SharedResources.Properties {
         public static string WeakSeriesColor {
             get {
                 return ResourceManager.GetString("WeakSeriesColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Websocket URL.
+        /// </summary>
+        public static string WebSocketUrl {
+            get {
+                return ResourceManager.GetString("WebSocketUrl", resourceCulture);
             }
         }
         
