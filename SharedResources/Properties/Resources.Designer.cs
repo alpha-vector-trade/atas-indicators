@@ -2436,6 +2436,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Limit History.
+        /// </summary>
+        public static string HistoricalNewsLimit {
+            get {
+                return ResourceManager.GetString("HistoricalNewsLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horizontal offset.
         /// </summary>
         public static string HorizontalOffset {
@@ -2792,6 +2801,15 @@ namespace SharedResources.Properties {
         public static string LipsAlligator {
             get {
                 return ResourceManager.GetString("LipsAlligator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Historical News.
+        /// </summary>
+        public static string LoadHistoricalNews {
+            get {
+                return ResourceManager.GetString("LoadHistoricalNews", resourceCulture);
             }
         }
         

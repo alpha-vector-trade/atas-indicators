@@ -2450,4 +2450,10 @@
   <data name="ImportanceFilter" xml:space="preserve">
     <value>Importance Filter</value>
   </data>
+  <data name="LoadHistoricalNews" xml:space="preserve">
+    <value>Load Historical News</value>
+  </data>
+  <data name="HistoricalNewsLimit" xml:space="preserve">
+    <value>Limit History</value>
+  </data>
 </root>
