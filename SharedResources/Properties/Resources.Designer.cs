@@ -483,6 +483,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background neutral.
+        /// </summary>
+        public static string BackgroundNeutral {
+            get {
+                return ResourceManager.GetString("BackgroundNeutral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Background sell color.
         /// </summary>
         public static string BackGroundSellColor {
