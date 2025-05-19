@@ -204,6 +204,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analysis Font Color.
+        /// </summary>
+        public static string AnalysisFontColor {
+            get {
+                return ResourceManager.GetString("AnalysisFontColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retrospective analysis period.
         /// </summary>
         public static string AnalysisPeriod {

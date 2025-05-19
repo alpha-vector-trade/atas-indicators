@@ -2459,4 +2459,7 @@
   <data name="BackgroundNeutral" xml:space="preserve">
     <value>Background neutral</value>
   </data>
+  <data name="AnalysisFontColor" xml:space="preserve">
+    <value>Analysis Font Color</value>
+  </data>
 </root>

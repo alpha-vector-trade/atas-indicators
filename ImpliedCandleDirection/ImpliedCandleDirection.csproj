@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
+        <AssemblyName>ATAS.Indicators.ImpliedCandleDirection</AssemblyName>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <AssemblyTitle>Implied Candle Direction</AssemblyTitle>
+        <Product>AlphaVector ATAS Indicators</Product>
+        <Description>Displays a small marker for candle's close below or above 50 percent</Description>
+        <PackageId>AlphaVector.ATAS.Indicators.ImpliedCandleDirection</PackageId>
+        <LangVersion>latest</LangVersion>
+        <UseWPF>true</UseWPF>
+        <OutputType>Library</OutputType>
+        <AtasIndicatorsDir>$(USERPROFILE)\Documents\ATAS\Indicators</AtasIndicatorsDir>
+        <AtasPlatformDir>C:\Program Files (x86)\ATAS Platform</AtasPlatformDir>
+    </PropertyGroup>
+
+    <Target Name="MergeAssemblies" AfterTargets="PostBuildEvent">
+        <Exec Command="$(ILRepack) /lib:&quot;$(AtasPlatformDir)&quot; /out:$(TargetDir)Merged\$(TargetFileName) $(TargetPath) $(TargetDir)SharedResources.dll"/>
+        <Copy SourceFiles="$(TargetDir)Merged\$(TargetFileName)" DestinationFolder="$(AtasIndicatorsDir)"/>
+    </Target>
+
+    <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk"/>
+    <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk"/>
+
+    <ItemGroup>
+        <PackageReference Include="ILRepack" Version="2.0.41">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="morelinq" Version="4.3.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0"/>
+        <PackageReference Include="System.Drawing.Common" Version="8.0.10"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="ATAS.DataFeedsCore">
+            <HintPath>$(AtasPlatformDir)\ATAS.DataFeedsCore.dll</HintPath>
+        </Reference>
+        <Reference Include="ATAS.Indicators">
+            <HintPath>$(AtasPlatformDir)\ATAS.Indicators.dll</HintPath>
+        </Reference>
+        <Reference Include="OFT.Attributes">
+            <HintPath>$(AtasPlatformDir)\OFT.Attributes.dll</HintPath>
+        </Reference>
+        <Reference Include="OFT.Localization">
+            <HintPath>$(AtasPlatformDir)\OFT.Localization.dll</HintPath>
+        </Reference>
+        <Reference Include="OFT.Rendering">
+            <HintPath>$(AtasPlatformDir)\OFT.Rendering.dll</HintPath>
+        </Reference>
+        <Reference Include="Utils.Common">
+            <HintPath>$(AtasPlatformDir)\Utils.Common.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SharedResources\SharedResources.csproj"/>
+    </ItemGroup>
+
+</Project>
