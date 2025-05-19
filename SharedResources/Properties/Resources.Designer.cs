@@ -3840,6 +3840,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to On Opposite Side.
+        /// </summary>
+        public static string OppositeSide {
+            get {
+                return ResourceManager.GetString("OppositeSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other.
         /// </summary>
         public static string Other {

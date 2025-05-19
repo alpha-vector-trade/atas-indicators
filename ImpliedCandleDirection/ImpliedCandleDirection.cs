@@ -33,7 +33,8 @@ public class ImpliedCandleDirection : Indicator
         CandleDirection
     }
 
-    private int _offset = 5;
+    private int _offset = 3;
+    private bool _oppositeSide = true;
     private LabelLocations _labelLocation = LabelLocations.CandleDirection;
 
     #endregion
@@ -57,7 +58,7 @@ public class ImpliedCandleDirection : Indicator
     };
 
     [Display(ResourceType = typeof(Strings), Name = nameof(Strings.LabelLocation), GroupName = nameof(Strings.Drawing),
-        Description = nameof(Strings.LabelLocationDescription))]
+        Description = nameof(Strings.LabelLocationDescription), Order = 100)]
     public LabelLocations LabelLocation
     {
         get => _labelLocation;
@@ -68,7 +69,18 @@ public class ImpliedCandleDirection : Indicator
         }
     }
 
-    [Display(ResourceType = typeof(Resources), Name = "Offset", GroupName = "Drawing", Order = 100)]
+    [Display(ResourceType = typeof(Resources), Name = "OppositeSide", GroupName = "Drawing", Order = 110)]
+    public bool OppositeSide
+    {
+        get => _oppositeSide;
+        set
+        {
+            _oppositeSide = value;
+            RecalculateValues();
+        }
+    }
+
+    [Display(ResourceType = typeof(Resources), Name = "Offset", GroupName = "Drawing", Order = 120)]
     public int Offset
     {
         get => _offset;
@@ -166,6 +178,9 @@ public class ImpliedCandleDirection : Indicator
     {
         var topPosition = candle.High + InstrumentInfo.TickSize * _offset;
         var bottomPosition = candle.Low - InstrumentInfo.TickSize * _offset;
+
+        if (OppositeSide && candle.Close != candle.Open)
+            (topPosition, bottomPosition) = (bottomPosition, topPosition);
 
         return LabelLocation switch
         {

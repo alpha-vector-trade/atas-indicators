@@ -2462,4 +2462,7 @@
   <data name="AnalysisFontColor" xml:space="preserve">
     <value>Analysis Font Color</value>
   </data>
+  <data name="OppositeSide" xml:space="preserve">
+    <value>On Opposite Side</value>
+  </data>
 </root>
