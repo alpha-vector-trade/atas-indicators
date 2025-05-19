@@ -28,6 +28,10 @@ trading periods.
 Displays vertical lines at significant time boundaries (day, week, or month), providing visual reference points for
 different timeframes directly on the chart.
 
+### Implied Candle Direction
+Displays a configurable marker above or below the current candle to indicate wether the candle closed above or below
+50% of it's high/low range. Candles closing above are considered bullish and candles closing below are considered bearish.
+
 ## Setup and Installation
 ### Prerequisites
 - Visual Studio 2019 or later
