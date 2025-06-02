@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
-        <AssemblyName>ATAS.Indicators.Ratio.Extended</AssemblyName>
+        <AssemblyName>AlphaVector.Indicators.Ratios.Extended</AssemblyName>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <AssemblyTitle>Ratios Extended</AssemblyTitle>
         <Product>AlphaVector ATAS Indicators</Product>

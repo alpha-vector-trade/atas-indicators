@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
-		<AssemblyName>ATAS.Indicators.SessionColor.Extended</AssemblyName>
+		<AssemblyName>AlphaVector.Indicators.SessionColor.Extended</AssemblyName>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<AssemblyTitle>Session Color Extended</AssemblyTitle>
 		<Product>AlphaVector ATAS Indicators</Product>

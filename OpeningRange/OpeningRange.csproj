@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
-        <AssemblyName>ATAS.Indicators.OpeningRange</AssemblyName>
+        <AssemblyName>AlphaVector.Indicators.OpeningRange</AssemblyName>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <AssemblyTitle>Opening Range</AssemblyTitle>
         <Product>AlphaVector ATAS Indicators</Product>

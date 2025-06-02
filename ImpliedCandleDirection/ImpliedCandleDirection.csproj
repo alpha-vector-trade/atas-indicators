@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
-        <AssemblyName>ATAS.Indicators.ImpliedCandleDirection</AssemblyName>
+        <AssemblyName>AlphaVector.Indicators.ImpliedCandleDirection</AssemblyName>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <AssemblyTitle>Implied Candle Direction</AssemblyTitle>
         <Product>AlphaVector ATAS Indicators</Product>

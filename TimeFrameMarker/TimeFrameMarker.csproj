@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
-        <AssemblyName>ATAS.Indicators.TimeFrameMarker</AssemblyName>
+        <AssemblyName>AlphaVector.Indicators.TimeFrameMarker</AssemblyName>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <AssemblyTitle>Timeframe Marker</AssemblyTitle>
         <Product>AlphaVector ATAS Indicators</Product>

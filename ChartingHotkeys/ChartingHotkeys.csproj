@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
-        <AssemblyName>ATAS.Indicators.ChartingHotkeys</AssemblyName>
+        <AssemblyName>AlphaVector.Indicators.ChartingHotkeys</AssemblyName>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <AssemblyTitle>Charting Hotkeys</AssemblyTitle>
         <Product>AlphaVector ATAS Indicators</Product>

@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0-windows</TargetFramework>
         <RootNamespace>ATAS.Indicators.AlphaVector</RootNamespace>
-        <AssemblyName>ATAS.Indicators.DailyLines.Extended</AssemblyName>
+        <AssemblyName>AlphaVector.Indicators.DailyLines.Extended</AssemblyName>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <AssemblyTitle>Daily Lines Extended</AssemblyTitle>
         <Product>AlphaVector ATAS Indicators</Product>
