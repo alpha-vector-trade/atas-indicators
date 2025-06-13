@@ -324,7 +324,7 @@ public class OpeningRange : Indicator
         // Draw current range if it exists
         if (_currentRangeStartBar > 0 && (!RenderOnlyAfterFormation || _rangeFormed))
         {
-            DrawRangeLines(context, _currentHigh, _currentLow, _currentHighBar, _currentLowBar, _currentRangeStartBar);
+            DrawRangeLines(context, _currentHigh, _currentLow, _currentHighBar, _currentLowBar, _currentRangeStartBar, true);
         }
 
         if (ShowFormationMarkers && _currentRangeStartBar > 0 && !_rangeFormed)
@@ -556,14 +556,14 @@ public class OpeningRange : Indicator
         }
     }
 
-    private void DrawRangeLines(RenderContext context, decimal high, decimal low, int highBar, int lowBar, int startBar)
+    private void DrawRangeLines(RenderContext context, decimal high, decimal low, int highBar, int lowBar, int startBar, bool extend = false)
     {
         var timeFrameLabel = _timeFrame == TimeFrameType.Weekly ? "Weekly" : "Daily";
 
         // Determine the end X position for the lines
         int endX;
 
-        if (ExtendLines)
+        if (ExtendLines || extend)
         {
             // Extend to the right edge of the chart
             endX = Container.Region.Right;
@@ -608,7 +608,7 @@ public class OpeningRange : Indicator
         }
 
         // Draw price labels if enabled
-        if (ShowPrice && ExtendLines)
+        if (ShowPrice && (ExtendLines || extend))
         {
             var bounds = context.ClipBounds;
             context.ResetClip();
