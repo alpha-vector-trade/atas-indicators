@@ -44,10 +44,10 @@ public class OpeningRange : Indicator
     private readonly RenderFont _font = new("Arial", 8);
 
     private TimeFrameType _timeFrame = TimeFrameType.Weekly;
-    private FilterInt _dailyMinutes = new(false) { Value = 30 };
+    private int _dailyMinutes = 30;
     private bool _showHistoricalRanges = true;
     private bool _showFormationMarkers = true;
-    private bool _renderOnlyAfterFormation = false;
+    private bool _renderOnlyAfterFormation;
     private int _lookBackDays = 60;
     private bool _showText = true;
     private bool _showPrice = true;
@@ -59,13 +59,17 @@ public class OpeningRange : Indicator
     private int _currentRangeStartBar;
     private int _currentRangeEndBar;
     private DateTime _currentRangeDate;
+    private bool _customSession;
+    private TimeSpan _startTime = TimeSpan.FromHours(0);
 
-    private bool _rangeFormed = false;
+    private bool _rangeFormed;
+    private bool _rangeStarted;
+    private DateTime _rangeStartTime = DateTime.MaxValue;
 
     private int _lastHighAlertBar = -1;
     private int _lastLowAlertBar = -1;
-    private bool _highAlertTriggeredForRange = false;
-    private bool _lowAlertTriggeredForRange = false;
+    private bool _highAlertTriggeredForRange;
+    private bool _lowAlertTriggeredForRange;
 
     // Dictionary to store historical ranges
     private readonly System.Collections.Generic.Dictionary<DateTime, (decimal high, decimal low, int highBar, int lowBar, int startBar, int endBar)> _historicalRanges =
@@ -83,20 +87,40 @@ public class OpeningRange : Indicator
         set
         {
             _timeFrame = value;
-            DailyMinutes.Enabled = value == TimeFrameType.Daily;
-
             RecalculateValues();
         }
     }
 
-    [Display(ResourceType = typeof(Resources), Name = "DailyMinutes", GroupName = "Settings", Order = 20)]
+    [Display(ResourceType = typeof(Resources), Name = "DailyMinutes", GroupName = "Daily", Order = 10)]
     [Range(1, 1440)]
-    public FilterInt DailyMinutes
+    public int DailyMinutes
     {
         get => _dailyMinutes;
         set
         {
             _dailyMinutes = value;
+            RecalculateValues();
+        }
+    }
+
+    [Display(ResourceType = typeof(Resources), Name = "CustomSession", GroupName = "Daily", Order = 20)]
+    public bool CustomSession
+    {
+        get => _customSession;
+        set
+        {
+            _customSession = value;
+            RecalculateValues();
+        }
+    }
+
+    [Display(ResourceType = typeof(Resources), Name = "StartTime", GroupName = "Daily", Order = 30)]
+    public TimeSpan StartTime
+    {
+        get => _startTime;
+        set
+        {
+            _startTime = value;
             RecalculateValues();
         }
     }
@@ -133,7 +157,7 @@ public class OpeningRange : Indicator
         set
         {
             _renderOnlyAfterFormation = value;
-            RecalculateValues();
+            RedrawChart();
         }
     }
 
@@ -145,7 +169,7 @@ public class OpeningRange : Indicator
         set
         {
             _showFormationMarkers = value;
-            RecalculateValues();
+            RedrawChart();
         }
     }
 
@@ -163,7 +187,7 @@ public class OpeningRange : Indicator
         set
         {
             _showHistoricalRanges = value;
-            RecalculateValues();
+            RedrawChart();
         }
     }
 
@@ -174,7 +198,7 @@ public class OpeningRange : Indicator
         set
         {
             _showText = value;
-            RecalculateValues();
+            RedrawChart();
         }
     }
 
@@ -185,7 +209,7 @@ public class OpeningRange : Indicator
         set
         {
             _showPrice = value;
-            RecalculateValues();
+            RedrawChart();
         }
     }
 
@@ -252,8 +276,6 @@ public class OpeningRange : Indicator
 
         _formationMarkersDataSeries.IsHidden = true;
         DataSeries[0] = _formationMarkersDataSeries;
-
-        DailyMinutes.Enabled = _timeFrame == TimeFrameType.Daily;
     }
 
     #endregion
@@ -262,58 +284,35 @@ public class OpeningRange : Indicator
 
     protected override void OnCalculate(int bar, decimal value)
     {
-        try
+        if (bar == 0)
         {
-            if (bar == 0)
-            {
-                ResetFields();
-                InitializeCalculation();
-            }
-
-            var candle = GetCandle(bar);
-            var isLastBar = bar == CurrentBar - 1;
-
-            // Check if we're in a new range period
-            var isNewRange = IsNewRangePeriod(bar);
-
-            if (isNewRange)
-            {
-                // If we have a current range and it's formed, save it to historical ranges
-                if (_rangeFormed && _currentRangeStartBar > 0)
-                {
-                    _historicalRanges[_currentRangeDate] = (_currentHigh, _currentLow, _currentHighBar, _currentLowBar,
-                        _currentRangeStartBar, _currentRangeEndBar);
-                }
-
-                // Start a new range
-                StartNewRange(bar, candle);
-            }
-            else if (_currentRangeStartBar > 0)
-            {
-                // Check if we're still within the formation period
-                if (!_rangeFormed && IsWithinFormationPeriod(bar, candle))
-                {
-                    UpdateRangeLevels(bar, candle);
-                }
-                else if (!_rangeFormed)
-                {
-                    // Mark the range as formed once we exit the formation period
-                    _rangeFormed = true;
-                    _currentRangeEndBar = bar;
-
-                    _formationMarkersDataSeries.Clear();
-                }
-            }
-
-            // Check for alerts only if the range has formed
-            if (isLastBar && _rangeFormed)
-            {
-                CheckForAlerts(bar, candle);
-            }
+            ResetFields();
+            InitializeCalculation();
         }
-        catch (Exception e)
+
+        var candle = GetCandle(bar);
+        var isLastBar = bar == CurrentBar - 1;
+
+        // Determine current state
+        var candleTime = GetAdjustedCandleTime(candle);
+        var isNewRangePeriod = IsNewRangePeriod(bar);
+        var shouldStartCustomSession = CustomSession && !_rangeStarted && candleTime >= _rangeStartTime;
+
+        // Handle new range periods or custom session starts
+        if (isNewRangePeriod || shouldStartCustomSession)
         {
-            this.LogError("Weekly Opening Range error: ", e);
+            HandleRangeStart(bar, candle, candleTime, isNewRangePeriod);
+        }
+        // Handle existing range updates
+        else if (_currentRangeStartBar > 0)
+        {
+            HandleExistingRange(bar, candle);
+        }
+
+        // Check for alerts only if the range has formed
+        if (isLastBar && _rangeFormed)
+        {
+            CheckForAlerts(bar, candle);
         }
     }
 
@@ -359,6 +358,7 @@ public class OpeningRange : Indicator
         _currentRangeStartBar = -1;
         _currentRangeEndBar = -1;
         _rangeFormed = false;
+        _rangeStarted = false;
         _historicalRanges.Clear();
 
         ResetAlertTracking();
@@ -387,13 +387,82 @@ public class OpeningRange : Indicator
         }
     }
 
+    private DateTime GetAdjustedCandleTime(IndicatorCandle candle)
+    {
+        var diff = InstrumentInfo.TimeZone;
+        return candle.Time.AddHours(diff);
+    }
+
+    private void HandleRangeStart(int bar, IndicatorCandle candle, DateTime candleTime, bool isNewRangePeriod)
+    {
+        if (isNewRangePeriod)
+        {
+            PrepareForNewRangePeriod(candleTime);
+            SaveCurrentRangeIfFormed();
+
+            if (!CustomSession)
+                StartNewRange(bar, candle);
+        }
+        else // Custom session start
+        {
+            _rangeStarted = true;
+            StartNewRange(bar, candle);
+        }
+    }
+
+    private void PrepareForNewRangePeriod(DateTime candleTime)
+    {
+        _rangeStarted = false;
+        _rangeStartTime = CalculateRangeStartTime(candleTime);
+    }
+
+    private DateTime CalculateRangeStartTime(DateTime candleTime)
+    {
+        var baseDate = candleTime.Date.Add(StartTime);
+        return baseDate > candleTime ? baseDate : baseDate.AddDays(1);
+    }
+
+    private void SaveCurrentRangeIfFormed()
+    {
+        if (_rangeFormed && _currentRangeStartBar > 0)
+        {
+            _historicalRanges[_currentRangeDate] = (
+                _currentHigh,
+                _currentLow,
+                _currentHighBar,
+                _currentLowBar,
+                _currentRangeStartBar,
+                _currentRangeEndBar
+            );
+        }
+    }
+
+    private void HandleExistingRange(int bar, IndicatorCandle candle)
+    {
+        if (!_rangeFormed)
+        {
+            if (IsWithinFormationPeriod(bar, candle))
+            {
+                UpdateRangeLevels(bar, candle);
+            }
+            else
+            {
+                FinalizeRangeFormation(bar);
+            }
+        }
+    }
+
+    private void FinalizeRangeFormation(int bar)
+    {
+        _rangeFormed = true;
+        _currentRangeEndBar = bar;
+        _formationMarkersDataSeries.Clear();
+    }
+
     private bool IsNewRangePeriod(int bar)
     {
         if (bar == 0)
             return true;
-
-        var candle = GetCandle(bar);
-        var prevCandle = GetCandle(bar - 1);
 
         switch (_timeFrame)
         {
@@ -434,7 +503,7 @@ public class OpeningRange : Indicator
                 var startCandle = GetCandle(_currentRangeStartBar);
                 var diff = (candle.Time - startCandle.Time).TotalMinutes;
                 // Ensure the difference calculation is meaningful (bar should be >= start bar)
-                return diff >= 0 && diff <= _dailyMinutes.Value;
+                return diff >= 0 && diff <= _dailyMinutes;
 
             default:
                 return false;
