@@ -41,7 +41,7 @@ public class OpeningRange : Indicator
 
     #region Fields
 
-    private readonly RenderFont _font = new("Arial", 8);
+    private readonly RenderFont _priceFont = new("Arial", 8);
 
     private TimeFrameType _timeFrame = TimeFrameType.Weekly;
     private int _dailyMinutes = 30;
@@ -201,6 +201,9 @@ public class OpeningRange : Indicator
             RedrawChart();
         }
     }
+
+    [Display(ResourceType = typeof(Resources), Name = "Font", GroupName = "Drawing", Order = 320)]
+    public FontSetting FontSetting { get; set; } = new("Arial", 9);
 
     [Display(ResourceType = typeof(Resources), Name = "ShowPrice", GroupName = "Drawing", Order = 260)]
     public bool ShowPrice
@@ -622,17 +625,11 @@ public class OpeningRange : Indicator
         }
     }
 
-    private void DrawString(RenderContext context, string renderText, int yPrice, Color color)
-    {
-        var textSize = context.MeasureString(renderText, _font);
-        context.DrawString(renderText, _font, color, Container.Region.Right - textSize.Width - 5, yPrice - textSize.Height);
-    }
-
     private void DrawStringAtLineEnd(RenderContext context, string renderText, int yPrice, int xPosition, Color color)
     {
-        var textSize = context.MeasureString(renderText, _font);
+        var textSize = context.MeasureString(renderText, FontSetting.RenderObject);
         // Position text at the end of the line, with a small offset to avoid overlapping
-        context.DrawString(renderText, _font, color, xPosition - textSize.Width - 5, yPrice - textSize.Height);
+        context.DrawString(renderText, FontSetting.RenderObject, color, xPosition - textSize.Width - 5, yPrice +5);
     }
 
     private void DrawPrice(RenderContext context, decimal price, RenderPen pen)
@@ -640,7 +637,7 @@ public class OpeningRange : Indicator
         var y = ChartInfo.GetYByPrice(price, false);
 
         var renderText = price.ToString(CultureInfo.InvariantCulture);
-        var textWidth = context.MeasureString(renderText, _font).Width;
+        var textWidth = context.MeasureString(renderText, _priceFont).Width;
 
         if (y + 8 > Container.Region.Height)
             return;
@@ -655,7 +652,7 @@ public class OpeningRange : Indicator
         };
 
         context.FillPolygon(pen.Color, polygon);
-        context.DrawString(renderText, _font, Color.White, Container.Region.Right + 6, y - 6);
+        context.DrawString(renderText, _priceFont, Color.White, Container.Region.Right + 6, y - 6);
     }
 
     private void DrawFormationMarkers(RenderContext context, decimal high, decimal low, int highBar, int lowBar)
