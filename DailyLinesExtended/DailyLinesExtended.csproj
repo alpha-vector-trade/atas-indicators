@@ -12,7 +12,7 @@
         <LangVersion>latest</LangVersion>
         <UseWPF>true</UseWPF>
         <OutputType>Library</OutputType>
-        <AtasIndicatorsDir>$(USERPROFILE)\Documents\ATAS\Indicators</AtasIndicatorsDir>
+        <AtasIndicatorsDir>$(APPDATA)\ATAS\Indicators</AtasIndicatorsDir>
         <AtasPlatformDir>C:\Program Files (x86)\ATAS Platform</AtasPlatformDir>
     </PropertyGroup>
 
